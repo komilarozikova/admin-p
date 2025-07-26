@@ -9,6 +9,7 @@ import {
     Paper,
     Alert,
 } from "@mui/material";
+import theme from "../themes";
 
 export default function Login() {
     const navigate = useNavigate();
@@ -30,7 +31,7 @@ export default function Login() {
 
     return (
         <Container maxWidth="sm">
-            <Paper elevation={3} sx={{ padding: 4, marginTop: 8 }}>
+            <Paper elevation={3} sx={{ padding: 4, marginTop: 32 }}>
                 <Typography variant="h5" align="center" gutterBottom>
                     Admin Panel Login
                 </Typography>
@@ -71,9 +72,16 @@ export default function Login() {
                     <Button
                         type="submit"
                         variant="contained"
-                        color="primary"
+                        color="theme.palette.neutral.main"
                         fullWidth
-                        sx={{ mt: 2 }}
+                        sx={{
+                            mt: 2,
+                            backgroundColor: theme.palette.neutral.main,
+                            color: "white", // yoki theme.palette.neutral.light
+                            "&:hover": {
+                                backgroundColor: theme.palette.neutral.dark,
+                            },
+                        }}
                     >
                         Login
                     </Button>
