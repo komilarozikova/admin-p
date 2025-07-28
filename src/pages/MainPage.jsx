@@ -7,7 +7,7 @@ export default function MainPage() {
   return (
     <div style={{ display: "flex" }}>
       <Sidebar />
-      <div style={{ flexGrow: 1, padding: 24, marginLeft: 240 }}>
+      <div style={{ flexGrow: 1, padding: 24}}>
         <Outlet />
       </div>
     </div>

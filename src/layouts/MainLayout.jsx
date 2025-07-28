@@ -36,7 +36,7 @@ const MainLayout = ({ children }) => {
         component="main"
         sx={{
           flexGrow: 1,
-          ml: open ? "240px" : "0px",
+          ml: open ? "140px" : "0px",
           p: 3,
           transition: "margin-left 0.3s ease",
           width: "100%",
