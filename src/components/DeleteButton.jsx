@@ -17,7 +17,7 @@ const DeleteButton = ({ id, onDelete }) => {
     if (!confirmDelete) return;
 
     try {
-      const response = await fetch(`/api/api/avto-test/questions/${id}`, {
+      const response = await fetch(`/api/avto-test/questions/${id}`, {
         method: "DELETE",
          headers: {
                 "Content-Type": "application/json",

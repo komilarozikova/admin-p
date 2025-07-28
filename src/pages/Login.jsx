@@ -13,21 +13,44 @@ import theme from "../themes";
 
 export default function Login() {
     const navigate = useNavigate();
-    const [form, setForm] = useState({ username: "", password: "" });
+    const [form, setForm] = useState({ phone: "", password: "" });
     const [error, setError] = useState("");
 
     const handleChange = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        if (form.username === "admin" && form.password === "1234") {
+        setError("");
+
+        try {
+            const res = await fetch("/api/avto-test/auth/admin-login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1NThmZGVhMS1iMGRhLTRjZjYtYmRmZS00MmMyYjg0ZjMzZjIiLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NTM1MzE4ODksImV4cCI6MTc1NDEzNjY4OX0.uV4yR2tCKnfHteyr0N6exV7FRMeiX2AWIlZGAIiHhdw`,
+                },
+                body: JSON.stringify({
+                    phone: form.phone,
+                    password: form.password,
+                }),
+            });
+
+            if (!res.ok) {
+                const errorData = await res.json();
+                throw new Error(errorData.message || "Login yoki parol noto‘g‘ri!");
+            }
+
+            const data = await res.json();
+            // tokenni localStorage ga saqlang
+            localStorage.setItem("token", data.token);
             navigate("/main");
-        } else {
-            setError("Login yoki parol noto'g'ri!");
+        } catch (err) {
+            setError(err.message);
         }
     };
+
 
     return (
         <Container maxWidth="sm">
@@ -50,15 +73,16 @@ export default function Login() {
                     sx={{ mt: 2 }}
                 >
                     <TextField
-                        label="Login"
-                        name="username"
+                        label="Phone"
+                        name="phone"
                         type="text"
                         fullWidth
                         margin="normal"
-                        value={form.username}
+                        value={form.phone}
                         onChange={handleChange}
                         required
                     />
+
                     <TextField
                         label="Password"
                         name="password"
@@ -72,12 +96,11 @@ export default function Login() {
                     <Button
                         type="submit"
                         variant="contained"
-                        color="theme.palette.neutral.main"
                         fullWidth
                         sx={{
                             mt: 2,
                             backgroundColor: theme.palette.neutral.main,
-                            color: "white", // yoki theme.palette.neutral.light
+                            color: "white",
                             "&:hover": {
                                 backgroundColor: theme.palette.neutral.dark,
                             },

@@ -16,6 +16,7 @@ import DeleteButton from "../components/DeleteButton";
 
 export default function SavolDetails() {
     const { id } = useParams();
+    const navigate = useNavigate();
     const [question, setQuestion] = useState(null);
     const [editedUz, setEditedUz] = useState("");
     const [editedRu, setEditedRu] = useState("");
@@ -27,7 +28,7 @@ export default function SavolDetails() {
 
 
     useEffect(() => {
-        fetch(`/api/api/avto-test/questions/${id}`)
+        fetch(`/api/avto-test/questions/${id}`)
             .then((res) => res.json())
             .then((data) => {
                 setQuestion(data);
@@ -45,7 +46,7 @@ export default function SavolDetails() {
     const handleSave = () => {
         setSaving(true);
 
-        fetch(`/api/api/avto-test/questions/${id}`, {
+        fetch(`/api/avto-test/questions/${id}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
@@ -141,7 +142,7 @@ export default function SavolDetails() {
             />
             <DeleteButton
                 id={question.id}
-                onDelete={() => navigate("/savollar")} />
+                onDelete={() => navigate("/main/savollar")} />
 
         </Box>
     );

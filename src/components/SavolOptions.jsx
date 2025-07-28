@@ -26,7 +26,7 @@ const SavolOptions = ({ optionsUz = [], optionsRu = [], setQuestion }) => {
 
     const updatedOption = { ...option, value: newValue };
 
-    fetch(`/api/api/avto-test/options/${option.id}`, {
+    fetch(`/api/avto-test/options/${option.id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
