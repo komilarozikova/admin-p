@@ -18,21 +18,20 @@ function Savollar() {
     useEffect(() => {
         const fetchQuestions = async () => {
             try {
-                const res = await axios.get(
-                    '/api/api/avto-test/questions/get-questions-for-admin?questionSetNumber=1',
-                    {
-                        headers: {
-                            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1NThmZGVhMS1iMGRhLTRjZjYtYmRmZS00MmMyYjg0ZjMzZjIiLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NTM1MzE4ODksImV4cCI6MTc1NDEzNjY4OX0.uV4yR2tCKnfHteyr0N6exV7FRMeiX2AWIlZGAIiHhdw`, // token
-                        },
-                    }
-                );
+                const res = await axios.get('/api/avto-test/questions?page=1&limit=10', {
+                    headers: {
+                        Authorization: `Bearer ey...`, // tokenni to‘liq yozing
+                    },
+                });
 
-                if (res.data?.data) {
-                    setQuestions(res.data.data);
-                    console.log("Kelib tushgan data:", res.data.data);
+                console.log("Butun response:", res.data);
+
+                if (Array.isArray(res.data.data)) {
+                    setQuestions(res.data.data); // ✅ to‘g‘ri massiv bu yerda
                 } else {
-                    console.log("Savollar topilmadi");
+                    console.error("❌ Savollar massiv emas.");
                 }
+
             } catch (err) {
                 console.error("Xatolik:", err);
             }
@@ -56,7 +55,7 @@ function Savollar() {
                     <Link
                         key={index}
                         to={`${question.id}`}
-                        state={{ questionNumber: startIndex + index + 1 }} 
+                        state={{ questionNumber: startIndex + index + 1 }}
                         style={{ textDecoration: 'none' }}
                     >
                         <Card
@@ -74,7 +73,7 @@ function Savollar() {
                         >
                             <CardContent>
                                 <Typography variant="subtitle1" color="text.primary" sx={{ fontWeight: 'bold' }}>
-                                    Test {startIndex + index + 1}:
+                                    Savol {startIndex + index + 1}:
                                 </Typography>
                                 <Typography variant="body1" color="text.primary">
                                     {question.question_uz}

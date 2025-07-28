@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
     Box,
     Typography,
@@ -11,6 +12,7 @@ import {
     CircularProgress,
 } from "@mui/material";
 import SavolOptions from "../components/SavolOptions";
+import DeleteButton from "../components/DeleteButton";
 
 export default function SavolDetails() {
     const { id } = useParams();
@@ -20,7 +22,8 @@ export default function SavolDetails() {
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
     const location = useLocation();
-    const questionNumber = location.state?.questionNumber;
+    const questionNumber = location.state?.questionNumber || "";
+
 
 
     useEffect(() => {
@@ -31,7 +34,7 @@ export default function SavolDetails() {
                 setEditedUz(data.question_uz || "");
                 setEditedRu(data.question_ru || "");
                 setLoading(false);
-                 console.log("API:", data);
+                console.log("API:", data);
             })
             .catch((err) => {
                 console.error("Error fetching question:", err);
@@ -52,6 +55,8 @@ export default function SavolDetails() {
                 ...question,
                 question_uz: editedUz,
                 question_ru: editedRu,
+                optionsUz: question.optionsUz, // Qo‘shing
+                optionsRu: question.optionsRu, // Qo‘shing
             }),
         })
 
@@ -60,8 +65,10 @@ export default function SavolDetails() {
                 return res.json();
             })
             .then((updatedData) => {
-                setQuestion(updatedData);
-                alert("Savol muvaffaqiyatli yangilandi!");
+                setQuestion(prev => ({
+                    ...prev,
+                    ...updatedData,
+                }));
             })
             .catch((err) => {
                 console.error("Update error:", err);
@@ -128,8 +135,14 @@ export default function SavolDetails() {
             </Grid>
 
             <SavolOptions
-               optionsUz={question.optionsUz} optionsRu={question.optionsRu}
+                optionsUz={question.optionsUz}
+                optionsRu={question.optionsRu}
+                setQuestion={setQuestion}
             />
+            <DeleteButton
+                id={question.id}
+                onDelete={() => navigate("/savollar")} />
+
         </Box>
     );
 
