@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 import SavolOptions from "../components/SavolOptions";
 import DeleteButton from "../components/DeleteButton";
+import SavolImg from "../components/SavolImj";
 
 export default function SavolDetails() {
     const { id } = useParams();
@@ -140,8 +141,11 @@ export default function SavolDetails() {
                 optionsRu={question.optionsRu}
                 setQuestion={setQuestion}
             />
+
+            <SavolImg imgUrl={question.imgUrl}
+          />
             <DeleteButton
-                id={question.id}
+                questionId={question.id}
                 onDelete={() => navigate("/main/savollar")} />
 
         </Box>

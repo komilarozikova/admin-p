@@ -11,10 +11,10 @@ import {
 } from "@mui/material";
 import theme from "../themes";
 
-const BASE_URL =
-    import.meta.env.DEV
-        ? "/api"
-        : "https://alibekmoyliyev.uz";
+// const BASE_URL =
+//     import.meta.env.DEV
+//         ? "/api"
+//         : "https://alibekmoyliyev.uz";
 
 export default function Login() {
     const navigate = useNavigate();
@@ -30,7 +30,7 @@ export default function Login() {
         setError("");
 
         try {
-            const res = await fetch(`${BASE_URL}/avto-test/auth/admin-login`, {
+            const res = await fetch(`/api/avto-test/auth/admin-login`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

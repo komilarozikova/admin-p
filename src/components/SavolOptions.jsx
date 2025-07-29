@@ -107,13 +107,13 @@ const SavolOptions = ({ optionsUz = [], optionsRu = [], setQuestion }) => {
         Variantlar (UZ / RU)
       </Typography>
       <Grid container spacing={4} justifyContent="space-between">
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} md={6} width={"500px"}>
           <Typography variant="subtitle1" gutterBottom>
             O'zbekcha
           </Typography>
           {optionsUz.map((opt, idx) => renderOption(opt, idx, "uz"))}
         </Grid>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} md={6} width={"500px"}>
           <Typography variant="subtitle1" gutterBottom>
             Русский
           </Typography>

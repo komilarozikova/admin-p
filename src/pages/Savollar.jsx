@@ -19,9 +19,10 @@ function Savollar() {
         const fetchQuestions = async () => {
             try {
                 const res = await axios.get('/api/avto-test/questions?page=1&limit=10', {
-                    headers: {
-                        Authorization: `Bearer ey...`, // tokenni to‘liq yozing
-                    },
+                   headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1NThmZGVhMS1iMGRhLTRjZjYtYmRmZS00MmMyYjg0ZjMzZjIiLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NTM1MzE4ODksImV4cCI6MTc1NDEzNjY4OX0.uV4yR2tCKnfHteyr0N6exV7FRMeiX2AWIlZGAIiHhdw`,
+                },
                 });
 
                 console.log("Butun response:", res.data);
@@ -71,6 +72,7 @@ function Savollar() {
                                 },
                             }}
                         >
+                            
                             <CardContent>
                                 <Typography variant="subtitle1" color="text.primary" sx={{ fontWeight: 'bold' }}>
                                     Savol {startIndex + index + 1}:
