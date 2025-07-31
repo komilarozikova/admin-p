@@ -3,6 +3,11 @@
 import { Button } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 
+const BASE_URL =
+    import.meta.env.DEV
+        ? "/api"
+        : "https://alibekmoyliyev.uz";
+        
 const DeleteButton = ({ id, onDelete }) => {
   const handleDelete = async () => {
     if (!id) {
@@ -18,7 +23,7 @@ const DeleteButton = ({ id, onDelete }) => {
     if (!confirmDelete) return;
 
     try {
-      const response = await fetch(`/api/avto-test/questions/${id}`, {
+      const response = await fetch(`${BASE_URL}/api/avto-test/questions/${id}`, {
         method: "DELETE",
          headers: {
                 "Content-Type": "application/json",

@@ -9,6 +9,12 @@ import {
 } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
 
+
+const BASE_URL =
+    import.meta.env.DEV
+        ? "/api"
+        : "https://alibekmoyliyev.uz";
+
 const SavolOptions = ({ optionsUz = [], optionsRu = [], setQuestion }) => {
   const [editingOptionId, setEditingOptionId] = useState(null);
   const [editingLang, setEditingLang] = useState(null);
@@ -26,7 +32,7 @@ const handleSave = (option, lang, newValue) => {
 
   // API endpointni tilga qarab aniqlash
   const apiLang = lang === "uz" ? "uz" : "ru";
-  const endpoint = `/api/avto-test/options/${apiLang}/${apiLang}/${option.id}`;
+  const endpoint = `${BASE_URL}/api/avto-test/options/${apiLang}/${apiLang}/${option.id}`;
 
   fetch(endpoint, {
     method: "PATCH",

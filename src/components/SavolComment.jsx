@@ -3,6 +3,11 @@ import { TextField, Button, Box, Typography } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
 
+const BASE_URL =
+    import.meta.env.DEV
+        ? "/api"
+        : "https://alibekmoyliyev.uz";
+
 export default function SavolComment({ question, onSave }) {
     const [comment, setComment] = useState(question.comment || "");
     const [expertComment, setExpertComment] = useState(question.expertComment || "");
@@ -44,7 +49,7 @@ export default function SavolComment({ question, onSave }) {
                 expertCommentRu: expertCommentRu.trim() === "" ? lastSavedComment?.expertCommentRu || "" : expertCommentRu,
             };
 
-            const response = await fetch(`/api/avto-test/questions/${question.id}`, {
+            const response = await fetch(`${BASE_URL}/api/avto-test/questions/${question.id}`, {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",

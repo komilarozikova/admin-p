@@ -16,6 +16,11 @@ import DeleteButton from "../components/DeleteButton";
 import SavolImg from "../components/SavolImj";
 import SavolComment from "../components/SavolComment";
 
+const BASE_URL =
+    import.meta.env.DEV
+        ? "/api"
+        : "https://alibekmoyliyev.uz";
+
 export default function SavolDetails() {
     const { id } = useParams();
     const navigate = useNavigate();
@@ -48,7 +53,7 @@ export default function SavolDetails() {
     const handleSave = () => {
         setSaving(true);
 
-        fetch(`/api/avto-test/questions/${id}`, {
+        fetch(`${BASE_URL}/api/avto-test/questions/${id}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
@@ -96,7 +101,7 @@ export default function SavolDetails() {
                         imgUrl: newImgUrl,
                     };
 console.log("imgUrl nima:", imgUrl);
-                    fetch(`/api/avto-test/questions/${question.id}`, {
+                    fetch(`${BASE_URL}/api/avto-test/questions/${question.id}`, {
                         method: 'PATCH',
                         headers: {
                             'Content-Type': 'application/json',

@@ -1,6 +1,13 @@
 import React, { useState } from 'react';
 import { Box, Button, Typography } from '@mui/material';
 
+const BASE_URL =
+    import.meta.env.DEV
+        ? "/api"
+        : "https://alibekmoyliyev.uz";
+
+
+
 const SavolImg = ({ imgUrl, questionId, comment, expert_commit, onImageUpload }) => {
     const [uploading, setUploading] = useState(false);
     const [error, setError] = useState(null);
@@ -24,7 +31,7 @@ const SavolImg = ({ imgUrl, questionId, comment, expert_commit, onImageUpload })
             for (let pair of formData.entries()) {
                 console.log(pair[0], pair[1]);
             }
-            const response = await fetch('/api/avto-test/uploads/uploads', {
+            const response = await fetch(`${BASE_URL}/api/avto-test/uploads/uploads`, {
                 method: 'POST',
                 headers: {
                     Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1NThmZGVhMS1iMGRhLTRjZjYtYmRmZS00MmMyYjg0ZjMzZjIiLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NTM1MzE4ODksImV4cCI6MTc1NDEzNjY4OX0.uV4yR2tCKnfHteyr0N6exV7FRMeiX2AWIlZGAIiHhdw`, // Token shu yerda
