@@ -20,45 +20,46 @@ const SavolOptions = ({ optionsUz = [], optionsRu = [], setQuestion }) => {
     setEditingLang(lang);
     setEditingValue(option.value);
   };
+const handleSave = (option, lang, newValue) => {
+  setSaving(true);
+  const updatedOption = { ...option, value: newValue };
 
-  const handleSave = (option, lang, newValue) => {
-    setSaving(true);
+  // API endpointni tilga qarab aniqlash
+  const apiLang = lang === "uz" ? "uz" : "ru";
+  const endpoint = `/api/avto-test/options/${apiLang}/${apiLang}/${option.id}`;
 
-    const updatedOption = { ...option, value: newValue };
-
-    fetch(`/api/avto-test/options/${option.id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1NThmZGVhMS1iMGRhLTRjZjYtYmRmZS00MmMyYjg0ZjMzZjIiLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NTM1MzE4ODksImV4cCI6MTc1NDEzNjY4OX0.uV4yR2tCKnfHteyr0N6exV7FRMeiX2AWIlZGAIiHhdw`,
-      },
-      body: JSON.stringify(updatedOption),
+  fetch(endpoint, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1NThmZGVhMS1iMGRhLTRjZjYtYmRmZS00MmMyYjg0ZjMzZjIiLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NTM1MzE4ODksImV4cCI6MTc1NDEzNjY4OX0.uV4yR2tCKnfHteyr0N6exV7FRMeiX2AWIlZGAIiHhdw`,
+    },
+    body: JSON.stringify(updatedOption),
+  })
+    .then((res) => {
+      if (!res.ok) throw new Error("Optionni saqlashda xatolik!");
+      return res.json();
     })
-      .then((res) => {
-        if (!res.ok) throw new Error("Optionni saqlashda xatolik!");
-        return res.json();
-      })
-      .then((updatedData) => {
-        setQuestion((prev) => {
-          const key =
-            lang === "uz" ? "optionsUz" : lang === "ru" ? "optionsRu" : "optionsEn";
+    .then((updatedData) => {
+      setQuestion((prev) => {
+        const key = lang === "uz" ? "optionsUz" : "optionsRu";
+        return {
+          ...prev,
+          [key]: prev[key].map((opt) =>
+            opt.id === updatedData.id ? updatedData : opt
+          ),
+        };
+      });
+      setEditingOptionId(null);
+      setEditingLang(null);
+    })
+    .catch((err) => {
+      console.error("Option saqlash xatosi:", err);
+      alert("Variantni saqlab bo‘lmadi.");
+    })
+    .finally(() => setSaving(false));
+};
 
-          return {
-            ...prev,
-            [key]: prev[key].map((opt) =>
-              opt.id === updatedData.id ? updatedData : opt
-            ),
-          };
-        });
-        setEditingOptionId(null);
-        setEditingLang(null);
-      })
-      .catch((err) => {
-        console.error("Option saqlash xatosi:", err);
-        alert("Variantni saqlab bo‘lmadi.");
-      })
-      .finally(() => setSaving(false));
-  };
 
   const renderOption = (opt, index, lang) => {
     const isEditing = editingOptionId === opt.id && editingLang === lang;

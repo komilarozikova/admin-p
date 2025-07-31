@@ -7,6 +7,7 @@ const DeleteButton = ({ id, onDelete }) => {
   const handleDelete = async () => {
     if (!id) {
       alert("ID topilmadi.");
+      console.log(id)
       return;
     }
 

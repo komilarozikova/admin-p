@@ -14,6 +14,7 @@ import {
 import SavolOptions from "../components/SavolOptions";
 import DeleteButton from "../components/DeleteButton";
 import SavolImg from "../components/SavolImj";
+import SavolComment from "../components/SavolComment";
 
 export default function SavolDetails() {
     const { id } = useParams();
@@ -83,6 +84,32 @@ export default function SavolDetails() {
 
     return (
         <Box sx={{ p: 8 }}>
+            <SavolImg
+                imgUrl={question.imgUrl}
+                questionId={question.id}
+                comment={question.comment}
+                expert_commit={question.expertComment}
+                onImageUpload={(newImgUrl) => {
+                    // PATCH so‘rovini shu yerda chaqirasan
+                    const payload = {
+                        ...question,
+                        imgUrl: newImgUrl,
+                    };
+console.log("imgUrl nima:", imgUrl);
+                    fetch(`/api/avto-test/questions/${question.id}`, {
+                        method: 'PATCH',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1NThmZGVhMS1iMGRhLTRjZjYtYmRmZS00MmMyYjg0ZjMzZjIiLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NTM1MzE4ODksImV4cCI6MTc1NDEzNjY4OX0.uV4yR2tCKnfHteyr0N6exV7FRMeiX2AWIlZGAIiHhdw`,
+                        },
+                        body: JSON.stringify(payload),
+                    })
+                        .then(res => res.json())
+                        .then(data => console.log('Yangilandi:', data))
+                        .catch(err => console.error('Xatolik:', err));
+                }}
+                
+            />
             {/* Save Button */}
             <Box mb={4} display="flex" container spacing={4} alignItems="stretch" justifyContent={"space-between"}>
                 <Typography variant="h5" gutterBottom>
@@ -142,10 +169,18 @@ export default function SavolDetails() {
                 setQuestion={setQuestion}
             />
 
-            <SavolImg imgUrl={question.imgUrl}
-          />
+
+            <SavolComment
+                question={question}
+                onSave={(updated) => {
+                    setQuestion(prev => ({
+                        ...prev,
+                        ...updated,
+                    }));
+                }}
+            />
             <DeleteButton
-                questionId={question.id}
+                id={question.id}
                 onDelete={() => navigate("/main/savollar")} />
 
         </Box>
