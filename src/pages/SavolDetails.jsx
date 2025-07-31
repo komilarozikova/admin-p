@@ -34,21 +34,27 @@ export default function SavolDetails() {
 
 
 
-    useEffect(() => {
-        fetch(`/api/avto-test/questions/${id}`)
-            .then((res) => res.json())
-            .then((data) => {
-                setQuestion(data);
-                setEditedUz(data.question_uz || "");
-                setEditedRu(data.question_ru || "");
-                setLoading(false);
-                console.log("API:", data);
-            })
-            .catch((err) => {
-                console.error("Error fetching question:", err);
-                setLoading(false);
-            });
-    }, [id]);
+ useEffect(() => {
+    fetch(`${BASE_URL}/api/avto-test/questions/${id}`)
+        .then(async (res) => {
+            if (!res.ok) {
+                const errText = await res.text();
+                throw new Error(errText);
+            }
+            return res.json();
+        })
+        .then((data) => {
+            setQuestion(data);
+            setEditedUz(data.question_uz || "");
+            setEditedRu(data.question_ru || "");
+            setLoading(false);
+        })
+        .catch((err) => {
+            console.error("Error fetching question:", err);
+            setLoading(false);
+        });
+}, [id]);
+
 
     const handleSave = () => {
         setSaving(true);
