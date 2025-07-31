@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import SavolOptions from "../components/SavolOptions";
 import DeleteButton from "../components/DeleteButton";
-import SavolImg from "../components/SavolImj";
+// import SavolImg from "../components/SavolImj";
 import SavolComment from "../components/SavolComment";
 
 const BASE_URL =
@@ -89,7 +89,7 @@ export default function SavolDetails() {
 
     return (
         <Box sx={{ p: 8 }}>
-            <SavolImg
+            {/* <SavolImg
                 imgUrl={question.imgUrl}
                 questionId={question.id}
                 comment={question.comment}
@@ -114,7 +114,7 @@ console.log("imgUrl nima:", imgUrl);
                         .catch(err => console.error('Xatolik:', err));
                 }}
                 
-            />
+            /> */}
             {/* Save Button */}
             <Box mb={4} display="flex" container spacing={4} alignItems="stretch" justifyContent={"space-between"}>
                 <Typography variant="h5" gutterBottom>
