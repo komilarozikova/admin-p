@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import SavolOptions from "../components/SavolOptions";
 import DeleteButton from "../components/DeleteButton";
-// import SavolImg from "../components/SavolImj";
+import SavolImg from "../components/SavolImj";
 import SavolComment from "../components/SavolComment";
 
 const BASE_URL =
@@ -95,6 +95,10 @@ export default function SavolDetails() {
 
     return (
         <Box sx={{ p: 8 }}>
+            <SavolImg 
+            imgUrl={question.imgUrl}
+             questionId={question.id}
+            />
             {/* <SavolImg
                 imgUrl={question.imgUrl}
                 questionId={question.id}
