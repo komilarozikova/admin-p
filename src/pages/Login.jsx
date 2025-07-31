@@ -30,7 +30,7 @@ export default function Login() {
         setError("");
 
         try {
-            const res = await fetch(`${BASE_URL}/avto-test/auth/admin-login`, {
+            const res = await fetch(`${BASE_URL}/api/avto-test/auth/admin-login`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
