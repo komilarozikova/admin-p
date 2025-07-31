@@ -10,6 +10,11 @@ import {
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 
+const BASE_URL =
+    import.meta.env.DEV
+        ? "/api"
+        : "https://alibekmoyliyev.uz";
+
 function Savollar() {
     const [questions, setQuestions] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -18,7 +23,7 @@ function Savollar() {
     useEffect(() => {
         const fetchQuestions = async () => {
             try {
-                const res = await axios.get('/api/avto-test/questions/get-questions-for-admin?page=1&limit=100', {
+                const res = await axios.get(`${BASE_URL}/api/avto-test/questions/get-questions-for-admin?page=1&limit=100`, {
                    headers: {
                     "Content-Type": "application/json",
                     Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1NThmZGVhMS1iMGRhLTRjZjYtYmRmZS00MmMyYjg0ZjMzZjIiLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NTM1MzE4ODksImV4cCI6MTc1NDEzNjY4OX0.uV4yR2tCKnfHteyr0N6exV7FRMeiX2AWIlZGAIiHhdw`,
