@@ -93,7 +93,7 @@ export default function SavolComment({ question, onSave }) {
         localStorage.setItem(`comment-${question.id}`, JSON.stringify(updated));
 
         try {
-            await fetch(`/api/avto-test/questions/${question.id}`, {
+            await fetch(`${BASE_URL}/api/avto-test/questions/${question.id}`, {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",
@@ -123,7 +123,7 @@ export default function SavolComment({ question, onSave }) {
         localStorage.setItem(`comment-${question.id}`, JSON.stringify(updated));
 
         try {
-            await fetch(`/api/avto-test/questions/${question.id}`, {
+            await fetch(`${BASE_URL}/api/avto-test/questions/${question.id}`, {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",
