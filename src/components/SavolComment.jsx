@@ -83,11 +83,11 @@ export default function SavolComment({ question, onSave }) {
             setSaving(false);
         }
     };
-    const handleDeleteComment = async () => {
+    const handleDeleteUzComment = async () => {
         const updated = {
             ...lastSavedComment,
             comment: "",
-            commentRu: "",
+            // commentRu: "",
         };
         setLastSavedComment(updated);
         localStorage.setItem(`comment-${question.id}`, JSON.stringify(updated));
@@ -102,7 +102,7 @@ export default function SavolComment({ question, onSave }) {
                 body: JSON.stringify({
                     ...question,
                     comment: "",
-                    commentRu: "",
+                    commentRu: updated.commentRu,
                     expertComment: updated.expertComment,
                     expertCommentRu: updated.expertCommentRu,
                 }),
@@ -113,11 +113,11 @@ export default function SavolComment({ question, onSave }) {
         }
     };
 
-    const handleDeleteExpertComment = async () => {
+    const handleDeleteUzExpertComment = async () => {
         const updated = {
             ...lastSavedComment,
             expertComment: "",
-            expertCommentRu: "",
+            // expertCommentRu: "",
         };
         setLastSavedComment(updated);
         localStorage.setItem(`comment-${question.id}`, JSON.stringify(updated));
@@ -134,7 +134,7 @@ export default function SavolComment({ question, onSave }) {
                     comment: updated.comment,
                     commentRu: updated.commentRu,
                     expertComment: "",
-                    expertCommentRu: "",
+                    expertCommentRu: updated.expertCommentRu,
                 }),
             });
         } catch (err) {
@@ -143,6 +143,65 @@ export default function SavolComment({ question, onSave }) {
         }
     };
 
+// Foydalanuvchi izohi (RU) ni o‘chirish
+const handleDeleteRuExpertComment = async () => {
+    const updated = {
+        ...lastSavedComment,
+        expertCommentRu: "",
+    };
+    setLastSavedComment(updated);
+    localStorage.setItem(`comment-${question.id}`, JSON.stringify(updated));
+
+    try {
+        await fetch(`${BASE_URL}/api/avto-test/questions/${question.id}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ...`,
+            },
+            body: JSON.stringify({
+                ...question,
+                commentRu: updated.commentRu,
+                comment: updated.comment,
+                expertComment: updated.expertComment,
+                expertCommentRu: " ",
+            }),
+        });
+    } catch (err) {
+        console.error("UZ komment o‘chirish xatosi:", err);
+        alert("UZ kommentni o‘chirishda xatolik.");
+    }
+};
+
+// Foydalanuvchi izohi (RU) ni o‘chirish
+const handleDeleteRuComment = async () => {
+    const updated = {
+        ...lastSavedComment,
+        commentRu: "",
+    };
+    setLastSavedComment(updated);
+    localStorage.setItem(`comment-${question.id}`, JSON.stringify(updated));
+
+    try {
+        await fetch(`${BASE_URL}/api/avto-test/questions/${question.id}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ...`,
+            },
+            body: JSON.stringify({
+                ...question,
+                comment: updated.comment,
+                commentRu: "",
+                expertComment: updated.expertComment,
+                expertCommentRu: updated.expertCommentRu,
+            }),
+        });
+    } catch (err) {
+        console.error("RU komment o‘chirish xatosi:", err);
+        alert("RU kommentni o‘chirishda xatolik.");
+    }
+};
 
     return (
         <Box mt={4} mb={4} display="flex" flexDirection="column" gap={2}>
@@ -210,7 +269,7 @@ export default function SavolComment({ question, onSave }) {
                         <Box bgcolor="#f5f5f5" p={2} borderRadius={2} position="relative">
                             <IconButton
                                 size="small"
-                                onClick={handleDeleteComment}
+                                onClick={handleDeleteUzComment}
                                 sx={{ position: "absolute", top: 8, right: 8 }}
                                 aria-label="Foydalanuvchi izohini o‘chirish"
                             >
@@ -226,7 +285,7 @@ export default function SavolComment({ question, onSave }) {
                         <Box bgcolor="#f5f5f5" p={2} borderRadius={2} position="relative">
                             <IconButton
                                 size="small"
-                                onClick={handleDeleteExpertComment}
+                                onClick={handleDeleteUzExpertComment}
                                 sx={{ position: "absolute", top: 8, right: 8 }}
                                 aria-label="Ekspert izohini o‘chirish"
                             >
@@ -245,7 +304,7 @@ export default function SavolComment({ question, onSave }) {
                         <Box bgcolor="#f5f5f5" p={2} borderRadius={2} position="relative">
                             <IconButton
                                 size="small"
-                                onClick={handleDeleteComment}
+                                onClick={handleDeleteRuComment}
                                 sx={{ position: "absolute", top: 8, right: 8 }}
                                 aria-label="RU kommentariyani o‘chirish"
                             >
@@ -261,7 +320,7 @@ export default function SavolComment({ question, onSave }) {
                         <Box bgcolor="#f5f5f5" p={2} borderRadius={2} position="relative">
                             <IconButton
                                 size="small"
-                                onClick={handleDeleteExpertComment}
+                                onClick={handleDeleteRuExpertComment}
                                 sx={{ position: "absolute", top: 8, right: 8 }}
                                 aria-label="RU эксперт комментарийни o‘chirish"
                             >
