@@ -34,26 +34,26 @@ export default function SavolDetails() {
 
 
 
- useEffect(() => {
-    fetch(`${BASE_URL}/api/avto-test/questions/${id}`)
-        .then(async (res) => {
-            if (!res.ok) {
-                const errText = await res.text();
-                throw new Error(errText);
-            }
-            return res.json();
-        })
-        .then((data) => {
-            setQuestion(data);
-            setEditedUz(data.question_uz || "");
-            setEditedRu(data.question_ru || "");
-            setLoading(false);
-        })
-        .catch((err) => {
-            console.error("Error fetching question:", err);
-            setLoading(false);
-        });
-}, [id]);
+    useEffect(() => {
+        fetch(`${BASE_URL}/api/avto-test/questions/${id}`)
+            .then(async (res) => {
+                if (!res.ok) {
+                    const errText = await res.text();
+                    throw new Error(errText);
+                }
+                return res.json();
+            })
+            .then((data) => {
+                setQuestion(data);
+                setEditedUz(data.question_uz || "");
+                setEditedRu(data.question_ru || "");
+                setLoading(false);
+            })
+            .catch((err) => {
+                console.error("Error fetching question:", err);
+                setLoading(false);
+            });
+    }, [id]);
 
 
     const handleSave = () => {
@@ -69,8 +69,8 @@ export default function SavolDetails() {
                 ...question,
                 question_uz: editedUz,
                 question_ru: editedRu,
-                optionsUz: question.optionsUz, // Qo‘shing
-                optionsRu: question.optionsRu, // Qo‘shing
+                optionsUz: question.optionsUz, 
+                optionsRu: question.optionsRu, 
             }),
         })
 
@@ -90,41 +90,47 @@ export default function SavolDetails() {
             })
             .finally(() => setSaving(false));
     };
+    const handleImageUpload = (newImgUrl) => {
+        console.log("🟢 Yangi rasm URL keldi:", newImgUrl);
+
+        fetch(`${BASE_URL}/api/avto-test/questions/${question.id}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1NThmZGVhMS1iMGRhLTRjZjYtYmRmZS00MmMyYjg0ZjMzZjIiLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NTM1MzE4ODksImV4cCI6MTc1NDEzNjY4OX0.uV4yR2tCKnfHteyr0N6exV7FRMeiX2AWIlZGAIiHhdw`, 
+            },
+            body: JSON.stringify({
+                ...question,
+                imgUrl: newImgUrl,
+            }),
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                console.log("✅ PATCH muvaffaqiyatli:", data);
+                setQuestion((prev) => ({
+                    ...prev,
+                    imgUrl: newImgUrl,
+                }));
+            })
+            .catch((err) => {
+                console.error("❌ PATCH xatolik:", err);
+            });
+    };
 
     if (loading) return <CircularProgress />;
 
     return (
         <Box sx={{ p: 8 }}>
-            <SavolImg 
-            imgUrl={question.imgUrl}
-             questionId={question.id}
-            />
-            {/* <SavolImg
+            <SavolImg
                 imgUrl={question.imgUrl}
                 questionId={question.id}
                 comment={question.comment}
                 expert_commit={question.expertComment}
-                onImageUpload={(newImgUrl) => {
-                    // PATCH so‘rovini shu yerda chaqirasan
-                    const payload = {
-                        ...question,
-                        imgUrl: newImgUrl,
-                    };
-console.log("imgUrl nima:", imgUrl);
-                    fetch(`${BASE_URL}/api/avto-test/questions/${question.id}`, {
-                        method: 'PATCH',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1NThmZGVhMS1iMGRhLTRjZjYtYmRmZS00MmMyYjg0ZjMzZjIiLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NTM1MzE4ODksImV4cCI6MTc1NDEzNjY4OX0.uV4yR2tCKnfHteyr0N6exV7FRMeiX2AWIlZGAIiHhdw`,
-                        },
-                        body: JSON.stringify(payload),
-                    })
-                        .then(res => res.json())
-                        .then(data => console.log('Yangilandi:', data))
-                        .catch(err => console.error('Xatolik:', err));
-                }}
-                
-            /> */}
+                onImageUpload={handleImageUpload}
+            />
+
+
+
             {/* Save Button */}
             <Box mb={4} display="flex" container spacing={4} alignItems="stretch" justifyContent={"space-between"}>
                 <Typography variant="h5" gutterBottom>

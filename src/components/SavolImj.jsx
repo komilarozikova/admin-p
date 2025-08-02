@@ -6,8 +6,6 @@ const BASE_URL =
         ? "/api"
         : "https://alibekmoyliyev.uz";
 
-
-
 const SavolImg = ({ imgUrl, questionId, comment, expert_commit, onImageUpload }) => {
     const [uploading, setUploading] = useState(false);
     const [error, setError] = useState(null);
@@ -21,48 +19,52 @@ const SavolImg = ({ imgUrl, questionId, comment, expert_commit, onImageUpload })
         setUploading(true);
         setError(null);
 
-
+        console.log("📤 Rasm fayli yuborilyapti:", file.name);
 
         try {
             const formData = new FormData();
             formData.append('uploads', file);
-            console.log("Yuborilayotgan fayl:", file);
-            console.log("FormData preview:");
-            for (let pair of formData.entries()) {
-                console.log(pair[0], pair[1]);
-            }
+
             const response = await fetch(`${BASE_URL}/api/avto-test/uploads/uploads`, {
                 method: 'POST',
                 headers: {
-                    Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1NThmZGVhMS1iMGRhLTRjZjYtYmRmZS00MmMyYjg0ZjMzZjIiLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NTM1MzE4ODksImV4cCI6MTc1NDEzNjY4OX0.uV4yR2tCKnfHteyr0N6exV7FRMeiX2AWIlZGAIiHhdw`, // Token shu yerda
+                    Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1NThmZGVhMS1iMGRhLTRjZjYtYmRmZS00MmMyYjg0ZjMzZjIiLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NTM1MzE4ODksImV4cCI6MTc1NDEzNjY4OX0.uV4yR2tCKnfHteyr0N6exV7FRMeiX2AWIlZGAIiHhdw`, 
                 },
                 body: formData,
             });
 
-            const data = await response.json();
+            const result = await response.json();
+            console.log("📥 Serverdan javob:", result);
 
-            if (!response.ok) {
-                throw new Error(data.message || 'Rasm yuklanmadi');
+            const fileUrl = result.data?.url || result.data?.imgUrl || result.data?.path;
+
+            if (!fileUrl) {
+                throw new Error("Yuklangan rasm URL topilmadi.");
             }
 
-            let newImgUrl = data.imgUrl || data.url;
-            if (!newImgUrl && file.name) {
-                newImgUrl = `alibekmoyliyev.uz/uploads/${file.name}`;
-            }
-            if (onImageUpload) onImageUpload(newImgUrl); // PATCH uchun tashqariga yuboriladi
+            let newImgUrl = fileUrl.startsWith("http")
+                ? fileUrl
+                : `https://${fileUrl}`;
 
+            console.log("🖼️ Yangi rasm URL:", newImgUrl);
+
+            if (onImageUpload) {
+                onImageUpload(newImgUrl);
+            }
         } catch (err) {
             setError(err.message);
+            console.error("❌ Xatolik:", err);
         } finally {
             setUploading(false);
         }
     };
+  
 
     return (
         <Box display="flex" flexDirection="column" alignItems="center" my={4} gap={2}>
             <Box
                 component="img"
-                src={`https://${imgUrl}`}
+                src={`${imgUrl}`}
                 alt="Savol rasmi"
                 sx={{
                     maxWidth: '650px',
@@ -73,18 +75,9 @@ const SavolImg = ({ imgUrl, questionId, comment, expert_commit, onImageUpload })
                 }}
             />
 
-            <Button
-                variant="contained"
-                component="label"
-                disabled={uploading}
-            >
+            <Button variant="contained" component="label" disabled={uploading}>
                 {uploading ? 'Yuklanmoqda...' : 'Rasmni tanlang'}
-                <input
-                    type="file"
-                    accept="image/*"
-                    hidden
-                    onChange={handleFileChange}
-                />
+                <input type="file" accept="image/*" hidden onChange={handleFileChange} />
             </Button>
 
             {error && (
