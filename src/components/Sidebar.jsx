@@ -20,6 +20,7 @@ import {
   Discount as DiscountIcon,
   People as PeopleIcon,
 } from "@mui/icons-material";
+import LogOut from "./LogOut";
 
 const Sidebar = () => {
   const location = useLocation();
@@ -118,6 +119,7 @@ const Sidebar = () => {
           </ListItem>
         ))}
       </List>
+      <LogOut />
     </Drawer>
   );
 };
