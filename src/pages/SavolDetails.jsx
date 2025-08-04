@@ -26,7 +26,7 @@ export default function SavolDetails() {
     const { page, id } = useParams(); // page = questionSetNumber, id = current question ID
     const navigate = useNavigate();
     const [question, setQuestion] = useState(null);
-      const [questions, setQuestions] = useState([]); // 💡 shu yerda xatolik bo'lgan
+    const [questions, setQuestions] = useState([]); // 💡 shu yerda xatolik bo'lgan
     const [editedUz, setEditedUz] = useState("");
     const [editedRu, setEditedRu] = useState("");
     const [loading, setLoading] = useState(true);
@@ -37,7 +37,7 @@ export default function SavolDetails() {
     const [currentQuestion, setCurrentQuestion] = useState(null);
 
 
-  useEffect(() => {
+    useEffect(() => {
         const fetchQuestions = async () => {
             try {
                 const res = await axios.get(
@@ -97,8 +97,8 @@ export default function SavolDetails() {
                 ...question,
                 question_uz: editedUz,
                 question_ru: editedRu,
-                optionsUz: question.optionsUz, 
-                optionsRu: question.optionsRu, 
+                optionsUz: question.optionsUz,
+                optionsRu: question.optionsRu,
             }),
         })
 
@@ -125,7 +125,7 @@ export default function SavolDetails() {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1NThmZGVhMS1iMGRhLTRjZjYtYmRmZS00MmMyYjg0ZjMzZjIiLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NTM1MzE4ODksImV4cCI6MTc1NDEzNjY4OX0.uV4yR2tCKnfHteyr0N6exV7FRMeiX2AWIlZGAIiHhdw`, 
+                Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1NThmZGVhMS1iMGRhLTRjZjYtYmRmZS00MmMyYjg0ZjMzZjIiLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NTM1MzE4ODksImV4cCI6MTc1NDEzNjY4OX0.uV4yR2tCKnfHteyr0N6exV7FRMeiX2AWIlZGAIiHhdw`,
             },
             body: JSON.stringify({
                 ...question,
@@ -146,9 +146,11 @@ export default function SavolDetails() {
     };
 
     if (loading) return <CircularProgress />;
+ 
 
 
-  
+
+
     const goToPrev = () => {
         if (currentIndex > 0) {
             const prevId = questions[currentIndex - 1].id;
@@ -168,22 +170,23 @@ export default function SavolDetails() {
         <Box sx={{ p: 8 }}>
 
             <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 3 }}>
-                    <Button
-                        onClick={goToPrev}
-                        disabled={currentIndex === 0}
-                        sx={{ mr: 2 }}
-                        variant="outlined"
-                    >
-                        Oldingi
-                    </Button>
-                    <Button
-                        onClick={goToNext}
-                        disabled={currentIndex === questions.length - 1}
-                        variant="outlined"
-                    >
-                        Keyingi
-                    </Button>
+                <Button
+                    onClick={goToPrev}
+                    disabled={currentIndex === 0}
+                    sx={{ mr: 2 }}
+                    variant="outlined"
+                >
+                    Oldingi
+                </Button>
+                <Button
+                    onClick={goToNext}
+                    disabled={currentIndex === questions.length - 1}
+                    variant="outlined"
+                >
+                    Keyingi
+                </Button>
             </Box>
+            
             <SavolImage
                 imgUrl={question.imgUrl}
                 questionId={question.id}
@@ -263,12 +266,12 @@ export default function SavolDetails() {
                     }));
                 }}
             />
-           <Box display={"flex"} justifyContent={"space-between"}>
-             <Button onClick={() => navigate(`/main/savollar/${page}`)}>Orqaga</Button>
-             <DeleteButton
-                id={question.id}
-                onDelete={() => navigate("/main/savollar")} />
-           </Box>
+            <Box display={"flex"} justifyContent={"space-between"}>
+                <Button onClick={() => navigate(`/main/savollar/${page}`)}>Orqaga</Button>
+                <DeleteButton
+                    id={question.id}
+                    onDelete={() => navigate("/main/savollar")} />
+            </Box>
 
         </Box>
     );

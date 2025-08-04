@@ -9,7 +9,7 @@ const BASE_URL =
 const SavolImage = ({ imgUrl, questionId, comment, expert_commit, onImageUpload }) => {
     const [uploading, setUploading] = useState(false);
     const [error, setError] = useState(null);
-    const token = localStorage.getItem("access_token"); 
+    const token = localStorage.getItem("access_token");
 
 
     if (!imgUrl && !questionId) return null;
@@ -27,21 +27,21 @@ const SavolImage = ({ imgUrl, questionId, comment, expert_commit, onImageUpload 
             const formData = new FormData();
             formData.append('uploads', file);
 
-            const response = await fetch(`https://alibekmoyliyev.uz/api/avto-test/uploads/uploads`, {
+            const response = await fetch(`${BASE_URL}/api/avto-test/uploads/uploads`, {
                 method: 'POST',
                 headers: {
-                    Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1NThmZGVhMS1iMGRhLTRjZjYtYmRmZS00MmMyYjg0ZjMzZjIiLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NTM1MzE4ODksImV4cCI6MTc1NDEzNjY4OX0.uV4yR2tCKnfHteyr0N6exV7FRMeiX2AWIlZGAIiHhdw`, 
+                    Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1NThmZGVhMS1iMGRhLTRjZjYtYmRmZS00MmMyYjg0ZjMzZjIiLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NTM1MzE4ODksImV4cCI6MTc1NDEzNjY4OX0.uV4yR2tCKnfHteyr0N6exV7FRMeiX2AWIlZGAIiHhdw`,
                 },
                 body: formData,
             });
-
+console.log(response);
             const result = await response.json();
             console.log("📥 Serverdan javob:", result);
             console.log("imgUrl:", imgUrl);
 
 
             const fileUrl = result.data?.url || result.data?.imgUrl || result.data?.path;
-
+            console.log(fileUrl);
             if (!fileUrl) {
                 throw new Error("Yuklangan rasm URL topilmadi.");
             }
@@ -62,11 +62,26 @@ const SavolImage = ({ imgUrl, questionId, comment, expert_commit, onImageUpload 
             setUploading(false);
         }
     };
-  if (!imgUrl) return null;
+    if (!imgUrl) {
+        return (
+            <Box display="flex" flexDirection="column" alignItems="center">
+                <Typography color="text.secondary" fontSize={14} my={2}>
+                    Null
 
-  const imageUrl = imgUrl.startsWith("http")
-    ? imgUrl
-    : `https://${imgUrl}`;
+                </Typography>
+
+                <Button variant="contained" component="label" disabled={uploading}>
+                    {uploading ? 'Yuklanmoqda...' : 'Rasmni tanlang'}
+                    <input type="file" accept="image/*" hidden onChange={handleFileChange} />
+                </Button>
+            </Box>
+        );
+    }
+
+
+    const imageUrl = imgUrl.startsWith("http")
+        ? imgUrl
+        : `https://${imgUrl}`;
 
     return (
         <Box display="flex" flexDirection="column" alignItems="center" my={4} gap={2}>
