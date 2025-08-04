@@ -31,38 +31,50 @@ const Sidebar = () => {
   };
 
   const menuItems = [
-    { label: "Savollar", path: "/main/savollar", icon: <QuizIcon /> },
+    { label: "Savollar", path: "/main/savollar/1", icon: <QuizIcon /> },
     { label: "Promokodlar", path: "/main/promokodlar", icon: <DiscountIcon /> },
     { label: "Foydalanuvchilar", path: "/main/foydalanuvchilar", icon: <PeopleIcon /> },
-  ];
 
-  return (
-    <Drawer
-      variant="permanent"
-      anchor="left"
-      open={open}
-      sx={{
+
+  ];
+return (
+  <Drawer
+    variant="permanent"
+    anchor="left"
+    open={open}
+    sx={{
+      width: open ? 240 : 72,
+      flexShrink: 0,
+      whiteSpace: 'nowrap',
+      height: '100vh',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'space-between',
+      [`& .MuiDrawer-paper`]: {
         width: open ? 240 : 72,
-        flexShrink: 0,
-        whiteSpace: 'nowrap',
-        transition: (theme) => theme.transitions.create('width', {
-          easing: theme.transitions.easing.sharp,
-          duration: theme.transitions.duration.enteringScreen,
-        }),
-        [`& .MuiDrawer-paper`]: {
-          width: open ? 240 : 72,
-          transition: (theme) => theme.transitions.create('width', {
+        transition: (theme) =>
+          theme.transitions.create('width', {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.enteringScreen,
           }),
-          overflowX: 'hidden',
-          boxSizing: 'border-box',
-          paddingTop: 4,
-          borderRight: "1px solid #e0e0e0",
-        },
-      }}
-    >
-      <Toolbar sx={{ justifyContent: open ? "space-between" : "center", px: 2 }}>
+        overflowX: 'hidden',
+        boxSizing: 'border-box',
+        borderRight: '1px solid #e0e0e0',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between', // Bu muhim!
+      },
+    }}
+  >
+    {/* 🔼 TEPADAGI QISM (LOGO + MENU) */}
+    <Box>
+    <Box >
+  <Toolbar
+        sx={{
+          justifyContent: open ? 'space-between' : 'center',
+          px: 2,
+        }}
+      >
         {open && (
           <Typography variant="h6" fontWeight={600}>
             Admin Panel
@@ -72,16 +84,11 @@ const Sidebar = () => {
           {open ? <ChevronLeftIcon /> : <MenuIcon />}
         </IconButton>
       </Toolbar>
+
       <List>
         {menuItems.map((item) => (
-          <ListItem
-            key={item.path}
-            disablePadding
-            sx={{
-              marginY: 1,
-            }}
-          >
-            <Tooltip title={!open ? item.label : ""} placement="right">
+          <ListItem key={item.path} disablePadding sx={{ marginY: 1 }}>
+            <Tooltip title={!open ? item.label : ''} placement="right">
               <ListItemButton
                 component={Link}
                 to={item.path}
@@ -89,28 +96,27 @@ const Sidebar = () => {
                 sx={{
                   paddingY: 1.5,
                   paddingX: open ? 3 : 2,
-                  borderRadius: "8px",
+                  borderRadius: '8px',
                   mx: 1,
-                  justifyContent: open ? "flex-start" : "center",
-                  "&.Mui-selected": {
-                    backgroundColor: "#f0f0f0",
-                    fontWeight: "bold",
+                  justifyContent: open ? 'flex-start' : 'center',
+                  '&.Mui-selected': {
+                    backgroundColor: '#f0f0f0',
+                    fontWeight: 'bold',
                   },
-                  "&:hover": {
-                    backgroundColor: "#f9f9f9",
+                  '&:hover': {
+                    backgroundColor: '#f9f9f9',
                   },
                 }}
               >
                 <Box sx={{ minWidth: 32, display: 'flex', justifyContent: 'center' }}>
                   {item.icon}
                 </Box>
+
                 {open && (
                   <Box sx={{ ml: 2 }}>
                     <ListItemText
                       primary={item.label}
-                      primaryTypographyProps={{
-                        fontSize: 16,
-                      }}
+                      primaryTypographyProps={{ fontSize: 16 }}
                     />
                   </Box>
                 )}
@@ -119,9 +125,15 @@ const Sidebar = () => {
           </ListItem>
         ))}
       </List>
+    </Box>
+
       <LogOut />
-    </Drawer>
-  );
+
+    </Box>
+  
+  </Drawer>
+);
+
 };
 
 export default Sidebar;

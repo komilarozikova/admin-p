@@ -12,8 +12,8 @@ function App() {
     <Routes>
       <Route path="/" element={<Login />} />
       <Route path="/main" element={<MainPage />}>
-        <Route path="savollar" element={<Savollar />} />
-        <Route path="savollar/:id" element={<SavolDetails />} />
+        <Route path="savollar/:page?" element={<Savollar />} />
+        <Route path="savollar/:page?/:id" element={<SavolDetails />} />
         <Route path="promokodlar" element={<Promokodlar />} />
         <Route path="foydalanuvchilar" element={<Foydalanuvchilar />} />
       </Route>

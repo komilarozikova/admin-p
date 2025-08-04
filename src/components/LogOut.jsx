@@ -19,9 +19,10 @@ export default function LogOut() {
             onClick={handleLogout}
             sx={{
                 position: "absolute",
-                top: 16,
-                right: 16,
+                left: 20,
                 zIndex: 10,
+                bottom: 35,
+                gap: 2
             }}
         >
             Logout

@@ -65,7 +65,7 @@ const SavolImg = ({ imgUrl, questionId, comment, expert_commit, onImageUpload })
             <Box
                 component="img"
                 src={`${imgUrl}`}
-                alt="Savol rasmi"
+                alt="Null"
                 sx={{
                     maxWidth: '650px',
                     width: '100%',

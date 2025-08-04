@@ -15,6 +15,7 @@ import SavolOptions from "../components/SavolOptions";
 import DeleteButton from "../components/DeleteButton";
 import SavolImg from "../components/SavolImj";
 import SavolComment from "../components/SavolComment";
+import axios from "axios";
 
 const BASE_URL =
     import.meta.env.DEV
@@ -22,17 +23,44 @@ const BASE_URL =
         : "https://alibekmoyliyev.uz";
 
 export default function SavolDetails() {
-    const { id } = useParams();
+    const { page, id } = useParams(); // page = questionSetNumber, id = current question ID
     const navigate = useNavigate();
     const [question, setQuestion] = useState(null);
+      const [questions, setQuestions] = useState([]); // 💡 shu yerda xatolik bo'lgan
     const [editedUz, setEditedUz] = useState("");
     const [editedRu, setEditedRu] = useState("");
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
     const location = useLocation();
     const questionNumber = location.state?.questionNumber || "";
+    const [currentIndex, setCurrentIndex] = useState(null);
+    const [currentQuestion, setCurrentQuestion] = useState(null);
 
 
+  useEffect(() => {
+        const fetchQuestions = async () => {
+            try {
+                const res = await axios.get(
+                    `${BASE_URL}/api/avto-test/questions/get-questions-for-admin?questionSetNumber=${page}`,
+                    {
+                        headers: { Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1NThmZGVhMS1iMGRhLTRjZjYtYmRmZS00MmMyYjg0ZjMzZjIiLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NTM1MzE4ODksImV4cCI6MTc1NDEzNjY4OX0.uV4yR2tCKnfHteyr0N6exV7FRMeiX2AWIlZGAIiHhdw` },
+                    }
+                );
+                const questionList = res.data.data;
+                setQuestions(questionList);
+
+                const index = questionList.findIndex(q => String(q.id) === id);
+                if (index !== -1) {
+                    setCurrentIndex(index);
+                    setCurrentQuestion(questionList[index]);
+                }
+            } catch (error) {
+                console.error('Xatolik savollarni olishda:', error);
+            }
+        };
+
+        fetchQuestions();
+    }, [page, id]);
 
     useEffect(() => {
         fetch(`${BASE_URL}/api/avto-test/questions/${id}`)
@@ -119,8 +147,43 @@ export default function SavolDetails() {
 
     if (loading) return <CircularProgress />;
 
+
+  
+    const goToPrev = () => {
+        if (currentIndex > 0) {
+            const prevId = questions[currentIndex - 1].id;
+            navigate(`/main/savollar/${page}/${prevId}`);
+        }
+    };
+
+    const goToNext = () => {
+        if (currentIndex < questions.length - 1) {
+            const nextId = questions[currentIndex + 1].id;
+            navigate(`/main/savollar/${page}/${nextId}`);
+        }
+    };
+
+    if (!currentQuestion) return <Typography>Yuklanmoqda...</Typography>;
     return (
         <Box sx={{ p: 8 }}>
+
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 3 }}>
+                    <Button
+                        onClick={goToPrev}
+                        disabled={currentIndex === 0}
+                        sx={{ mr: 2 }}
+                        variant="outlined"
+                    >
+                        Oldingi
+                    </Button>
+                    <Button
+                        onClick={goToNext}
+                        disabled={currentIndex === questions.length - 1}
+                        variant="outlined"
+                    >
+                        Keyingi
+                    </Button>
+            </Box>
             <SavolImg
                 imgUrl={question.imgUrl}
                 questionId={question.id}
@@ -200,9 +263,12 @@ export default function SavolDetails() {
                     }));
                 }}
             />
-            <DeleteButton
+           <Box display={"flex"} justifyContent={"space-between"}>
+             <Button onClick={() => navigate(`/main/savollar/${page}`)}>Orqaga</Button>
+             <DeleteButton
                 id={question.id}
                 onDelete={() => navigate("/main/savollar")} />
+           </Box>
 
         </Box>
     );
