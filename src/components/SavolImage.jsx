@@ -6,9 +6,11 @@ const BASE_URL =
         ? "/api"
         : "https://alibekmoyliyev.uz";
 
-const SavolImj = ({ imgUrl, questionId, comment, expert_commit, onImageUpload }) => {
+const SavolImage = ({ imgUrl, questionId, comment, expert_commit, onImageUpload }) => {
     const [uploading, setUploading] = useState(false);
     const [error, setError] = useState(null);
+    const token = localStorage.getItem("access_token"); 
+
 
     if (!imgUrl && !questionId) return null;
 
@@ -35,6 +37,8 @@ const SavolImj = ({ imgUrl, questionId, comment, expert_commit, onImageUpload })
 
             const result = await response.json();
             console.log("📥 Serverdan javob:", result);
+            console.log("imgUrl:", imgUrl);
+
 
             const fileUrl = result.data?.url || result.data?.imgUrl || result.data?.path;
 
@@ -58,14 +62,18 @@ const SavolImj = ({ imgUrl, questionId, comment, expert_commit, onImageUpload })
             setUploading(false);
         }
     };
-  
+  if (!imgUrl) return null;
+
+  const imageUrl = imgUrl.startsWith("http")
+    ? imgUrl
+    : `https://${imgUrl}`;
 
     return (
         <Box display="flex" flexDirection="column" alignItems="center" my={4} gap={2}>
             <Box
                 component="img"
-                src={`${imgUrl}`}
-                alt="Null"
+                src={imageUrl}
+                alt="Rasm"
                 sx={{
                     maxWidth: '650px',
                     width: '100%',
@@ -89,4 +97,4 @@ const SavolImj = ({ imgUrl, questionId, comment, expert_commit, onImageUpload })
     );
 };
 
-export default SavolImj;
+export default SavolImage;

@@ -14,7 +14,7 @@ const BASE_URL =
     import.meta.env.DEV
         ? "/api"
         : "https://alibekmoyliyev.uz";
-        
+
 function Savollar() {
     const [questions, setQuestions] = useState([]);
     // const [currentPage, setCurrentPage] = useState(1);
@@ -33,7 +33,7 @@ function Savollar() {
     useEffect(() => {
         const fetchTotalCount = async () => {
             try {
-                const res = await axios.get('/api/avto-test/questions/get-count-questions', {
+                const res = await axios.get(`${BASE_URL}/api/avto-test/questions/get-count-questions`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },

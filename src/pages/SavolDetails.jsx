@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import SavolOptions from "../components/SavolOptions";
 import DeleteButton from "../components/DeleteButton";
-import SavolImj from "../components/SavolImj";
+import SavolImage from "../components/SavolImage";
 import SavolComment from "../components/SavolComment";
 import axios from "axios";
 
@@ -184,7 +184,7 @@ export default function SavolDetails() {
                         Keyingi
                     </Button>
             </Box>
-            <SavolImj
+            <SavolImage
                 imgUrl={question.imgUrl}
                 questionId={question.id}
                 comment={question.comment}
