@@ -6,7 +6,7 @@ const BASE_URL =
         ? "/api"
         : "https://alibekmoyliyev.uz";
 
-const SavolImg = ({ imgUrl, questionId, comment, expert_commit, onImageUpload }) => {
+const SavolImj = ({ imgUrl, questionId, comment, expert_commit, onImageUpload }) => {
     const [uploading, setUploading] = useState(false);
     const [error, setError] = useState(null);
 
@@ -89,4 +89,4 @@ const SavolImg = ({ imgUrl, questionId, comment, expert_commit, onImageUpload })
     );
 };
 
-export default SavolImg;
+export default SavolImj;
