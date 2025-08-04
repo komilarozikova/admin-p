@@ -27,7 +27,7 @@ const SavolImage = ({ imgUrl, questionId, comment, expert_commit, onImageUpload 
             const formData = new FormData();
             formData.append('uploads', file);
 
-            const response = await fetch(`${BASE_URL}/api/avto-test/uploads/uploads`, {
+            const response = await fetch(`https://alibekmoyliyev.uz/api/avto-test/uploads/uploads`, {
                 method: 'POST',
                 headers: {
                     Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1NThmZGVhMS1iMGRhLTRjZjYtYmRmZS00MmMyYjg0ZjMzZjIiLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NTM1MzE4ODksImV4cCI6MTc1NDEzNjY4OX0.uV4yR2tCKnfHteyr0N6exV7FRMeiX2AWIlZGAIiHhdw`, 
