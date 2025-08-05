@@ -39,9 +39,10 @@ function Savollar() {
                     },
                 });
 
-                const totalQuestions = res.data.data;
-                const pages = Math.ceil(totalQuestions / itemsPerPage);
+                const totalQuestions = res.data.data.questionSetNumberCount;
+                const pages = totalQuestions;
                 setTotalPages(pages);
+                console.log("Total pages:", pages);
             } catch (error) {
                 console.error("Xatolik sahifalar sonini olishda:", error);
             }
@@ -49,7 +50,6 @@ function Savollar() {
 
         fetchTotalCount();
     }, []);
-
     // Har bir sahifada 1ta bilet (questionSetNumber) bo‘yicha savollarni olish
     useEffect(() => {
         const fetchQuestions = async () => {
@@ -83,7 +83,10 @@ function Savollar() {
                     <Link
                         key={question.id}
                         to={`${question.id}`}
-                        state={{ questionNumber: index + 1 }}
+                        state={{
+                            questionNumber: index + 1,
+                            currentPage: currentPage, 
+                        }}
                         style={{ textDecoration: 'none' }}
                     >
                         <Card
@@ -113,12 +116,15 @@ function Savollar() {
 
             {/* Pagination */}
             <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
-                <Pagination
-                    count={totalPages}
-                    page={currentPage}
-                    onChange={handlePageChange}
-                    color="primary"
-                />
+                <Stack spacing={2}>
+                    <Pagination
+                        count={totalPages}
+                        page={currentPage}
+                        onChange={handlePageChange}
+                        color="primary"
+                    />
+                </Stack>
+
             </Box>
         </Box>
     );

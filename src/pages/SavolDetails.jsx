@@ -33,6 +33,7 @@ export default function SavolDetails() {
     const [saving, setSaving] = useState(false);
     const location = useLocation();
     const questionNumber = location.state?.questionNumber || "";
+    const currentPage = location.state?.currentPage || page;
     const [currentIndex, setCurrentIndex] = useState(null);
     const [currentQuestion, setCurrentQuestion] = useState(null);
 
@@ -146,7 +147,7 @@ export default function SavolDetails() {
     };
 
     if (loading) return <CircularProgress />;
- 
+
 
 
 
@@ -154,18 +155,31 @@ export default function SavolDetails() {
     const goToPrev = () => {
         if (currentIndex > 0) {
             const prevId = questions[currentIndex - 1].id;
-            navigate(`/main/savollar/${page}/${prevId}`);
+            navigate(`/main/savollar/${page}/${prevId}`, {
+                state: {
+                    questionNumber: currentIndex,       // 0-based => Savol 1 uchun index = 0
+                    currentPage: page,
+                }
+            });
         }
     };
 
     const goToNext = () => {
         if (currentIndex < questions.length - 1) {
             const nextId = questions[currentIndex + 1].id;
-            navigate(`/main/savollar/${page}/${nextId}`);
+            navigate(`/main/savollar/${page}/${nextId}`, {
+                state: {
+                    questionNumber: currentIndex + 2,   // 1-based raqam
+                    currentPage: page,
+                }
+            });
         }
     };
 
+
     if (!currentQuestion) return <Typography>Yuklanmoqda...</Typography>;
+    console.log(currentPage)
+    console.log(questionNumber)
     return (
         <Box sx={{ p: 8 }}>
 
@@ -186,7 +200,7 @@ export default function SavolDetails() {
                     Keyingi
                 </Button>
             </Box>
-            
+
             <SavolImage
                 imgUrl={question.imgUrl}
                 questionId={question.id}
@@ -199,9 +213,10 @@ export default function SavolDetails() {
 
             {/* Save Button */}
             <Box mb={4} display="flex" container spacing={4} alignItems="stretch" justifyContent={"space-between"}>
-                <Typography variant="h5" gutterBottom>
-                    Savol {questionNumber}
-                </Typography>
+                <Box gutterBottom display={"flex"} flexDirection={"row"} gap={"30px"}>
+                    <h3> Bilet : {currentPage}</h3>
+                    <h3>Savol :  {questionNumber}</h3>
+                </Box>
                 <Button
                     variant="contained"
                     color="primary"
