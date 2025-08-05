@@ -70,7 +70,7 @@ console.log(response);
 
                 </Typography>
 
-                <Button variant="contained" component="label" disabled={uploading}>
+                <Button variant="outlined" color='#3c3c3c'  component="label" disabled={uploading}>
                     {uploading ? 'Yuklanmoqda...' : 'Rasmni tanlang'}
                     <input type="file" accept="image/*" hidden onChange={handleFileChange} />
                 </Button>

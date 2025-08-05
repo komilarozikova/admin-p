@@ -183,8 +183,11 @@ export default function SavolDetails() {
     return (
         <Box sx={{ p: 8 }}>
 
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 3 }}>
-                <Button
+            <Box sx={{ display: 'flex', justifyContent: "space-between", mb: 3 }}>
+                <Box>
+                    <Button onClick={() => navigate(`/main/savollar/${page}`)}>Orqaga</Button>
+                </Box>
+                <Box> <Button
                     onClick={goToPrev}
                     disabled={currentIndex === 0}
                     sx={{ mr: 2 }}
@@ -192,13 +195,13 @@ export default function SavolDetails() {
                 >
                     Oldingi
                 </Button>
-                <Button
-                    onClick={goToNext}
-                    disabled={currentIndex === questions.length - 1}
-                    variant="outlined"
-                >
-                    Keyingi
-                </Button>
+                    <Button
+                        onClick={goToNext}
+                        disabled={currentIndex === questions.length - 1}
+                        variant="outlined"
+                    >
+                        Keyingi
+                    </Button></Box>
             </Box>
 
             <SavolImage
@@ -212,25 +215,23 @@ export default function SavolDetails() {
 
 
             {/* Save Button */}
-            <Box mb={4} display="flex" container spacing={4} alignItems="stretch" justifyContent={"space-between"}>
-                <Box gutterBottom display={"flex"} flexDirection={"row"} gap={"30px"}>
+            <Box mb={4} display="flex" container spacing={4} alignItems="stretch" justifyContent={"center"} pt={"40px"}>
+                <Box gutterBottom display={"flex"} flexDirection={"row"} gap={"30px"} 
+                    sx={{
+                        backgroundColor: "rgba(83, 125, 193, 0.189)", 
+                        padding: "16px",
+                        borderRadius: "10px",
+                     
+                    }}>
                     <h3> Bilet : {currentPage}</h3>
                     <h3>Savol :  {questionNumber}</h3>
                 </Box>
-                <Button
-                    variant="contained"
-                    color="primary"
-                    size="large"
-                    onClick={handleSave}
-                    disabled={saving}
-                >
-                    {saving ? "Saqlanmoqda..." : "Saqlash"}
-                </Button>
+
             </Box>
             <Grid container spacing={4} alignItems="stretch" justifyContent={"space-between"}>
                 {/* O‘zbekcha */}
                 <Grid item xs={12} md={6} >
-                    <Paper elevation={3} sx={{ p: 3, height: '100%', display: 'flex', flexDirection: 'column', gap: 2, width: '500px' }}>
+                    <Paper elevation={3} sx={{ p: 3, height: '100%', display: 'flex', flexDirection: 'column', gap: 2, width: '450px' }}>
                         <Typography variant="subtitle1" color="text.secondary">
                             O‘zbekcha:
                         </Typography>
@@ -248,7 +249,7 @@ export default function SavolDetails() {
 
                 {/* Русский */}
                 <Grid item xs={12} md={6}>
-                    <Paper elevation={3} sx={{ p: 3, height: '100%', display: 'flex', flexDirection: 'column', gap: 2, width: '500px' }}>
+                    <Paper elevation={3} sx={{ p: 3, height: '100%', display: 'flex', flexDirection: 'column', gap: 2, width: '450px' }}>
                         <Typography variant="subtitle1" color="text.secondary">
                             Русский:
                         </Typography>
@@ -263,6 +264,15 @@ export default function SavolDetails() {
                         />
                     </Paper>
                 </Grid>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    size="large"
+                    onClick={handleSave}
+                    disabled={saving}
+                >
+                    {saving ? "Saqlanmoqda..." : "Saqlash"}
+                </Button>
             </Grid>
 
             <SavolOptions
@@ -282,7 +292,7 @@ export default function SavolDetails() {
                 }}
             />
             <Box display={"flex"} justifyContent={"space-between"}>
-                <Button onClick={() => navigate(`/main/savollar/${page}`)}>Orqaga</Button>
+
                 <DeleteButton
                     id={question.id}
                     onDelete={() => navigate("/main/savollar")} />

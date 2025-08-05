@@ -204,10 +204,11 @@ const handleDeleteRuComment = async () => {
 };
 
     return (
-        <Box mt={4} mb={4} display="flex" flexDirection="column" gap={2}>
-            <Typography variant="h6">Izohlar</Typography>
+        <Box mt={4} mb={4} display="flex" flexDirection="row" justifyContent={"space-between"} gap={2}>
+          <Box width={"100%"}>
+              <Typography variant="h6">Izohlar</Typography>
 
-            <Box mt={4} mb={4} display="flex" flexDirection="row" gap={4}>
+            <Box mt={4} mb={4} display="flex" flexDirection="row" gap={4} width={"100%"}>
                 {/* O'zbekcha blok */}
                 <Box flex={1} display="flex" flexDirection="column" gap={2}>
                     <Typography variant="h6">O'zbekcha izohlar</Typography>
@@ -216,7 +217,7 @@ const handleDeleteRuComment = async () => {
                         label="Foydalanuvchi izohi (UZ)"
                         multiline
                         fullWidth
-                        minRows={3}
+                        minRows={1}
                         value={comment}
                         onChange={(e) => setComment(e.target.value)}
                     />
@@ -224,7 +225,7 @@ const handleDeleteRuComment = async () => {
                         label="Ekspert izohi (UZ)"
                         multiline
                         fullWidth
-                        minRows={3}
+                        minRows={1}
                         value={expertComment}
                         onChange={(e) => setExpertComment(e.target.value)}
                     />
@@ -238,7 +239,7 @@ const handleDeleteRuComment = async () => {
                         label="Комментарий пользователя (RU)"
                         multiline
                         fullWidth
-                        minRows={3}
+                        minRows={1}
                         value={commentRu}
                         onChange={(e) => setCommentRu(e.target.value)}
                     />
@@ -246,16 +247,19 @@ const handleDeleteRuComment = async () => {
                         label="Комментарий эксперта (RU)"
                         multiline
                         fullWidth
-                        minRows={3}
+                        minRows={1}
                         value={expertCommentRu}
                         onChange={(e) => setExpertCommentRu(e.target.value)}
                     />
                 </Box>
             </Box>
+          </Box>
 
-            <Button variant="contained" color="primary" onClick={handleSave} disabled={saving}>
+         <Box display={"flex"} alignItems={"center"} paddingTop={"72px"}>
+               <Button variant="contained" color="primary" onClick={handleSave} disabled={saving}>
                 {saving ? "Saqlanmoqda..." : "Izohlarni saqlash"}
             </Button>
+         </Box>
 
             {saved && (
                 <Typography color="success.main">✅ Saqlandi!</Typography>
