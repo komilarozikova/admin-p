@@ -90,7 +90,7 @@ console.log(response);
                 src={imageUrl}
                 alt="Rasm"
                 sx={{
-                    maxWidth: '650px',
+                    maxWidth: '450px',
                     width: '100%',
                     borderRadius: 2,
                     boxShadow: 3,
