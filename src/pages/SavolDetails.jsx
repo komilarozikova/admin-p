@@ -10,12 +10,17 @@ import {
     Grid,
     Paper,
     CircularProgress,
+    AppBar,
+    Toolbar,
+    IconButton,
 } from "@mui/material";
 import SavolOptions from "../components/SavolOptions";
 import DeleteButton from "../components/DeleteButton";
 import SavolImage from "../components/SavolImage";
 import SavolComment from "../components/SavolComment";
 import axios from "axios";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const BASE_URL =
     import.meta.env.DEV
@@ -181,27 +186,62 @@ export default function SavolDetails() {
     console.log(currentPage)
     console.log(questionNumber)
     return (
-        <Box sx={{ p: 8 }}>
+        <Box sx={{ pl: 8, pr: 8 }}>
+            <AppBar
+                position="sticky"
+                elevation={4} // shadow chuqurligi: 0 - 24 oralig'ida
+                sx={{
+                    backgroundColor: 'white',
+                    color: 'black',
+                    px: 2,
+                }}
+            >
+                <Toolbar disableGutters sx={{ justifyContent: 'space-between' }}>
+                    <Box display="flex" alignItems="center" gap={2}>
+                        <IconButton color="inherit" onClick={() => navigate(`/main/savollar/${page}`)}>
+                            <ArrowBackIcon />
+                        </IconButton>
+                        <Typography variant="subtitle1">Bilet: {currentPage}</Typography>
+                        <Typography variant="subtitle1">Savol: {questionNumber}</Typography>
+                    </Box>
 
+                    <Box display="flex" alignItems="center" gap={1}>
+                        <IconButton color="error">
+                            <DeleteButton id={question.id}
+                                onDelete={() => navigate("/main/savollar")} />
+                        </IconButton>
+                        <Button
+                            onClick={goToPrev}
+                            disabled={currentIndex === 0}
+                            variant="outlined"
+                        >
+                            Oldingi
+                        </Button>
+                        <Button
+                            onClick={goToNext}
+                             sx={{ mr: 2 }}
+                            disabled={currentIndex === questions.length - 1}
+                            variant="outlined"
+                        >
+                            Keyingi
+                        </Button>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            size="large"
+                            onClick={handleSave}
+                            disabled={saving}
+                        >
+                            {saving ? "Saqlanmoqda..." : "Saqlash"}
+                        </Button>
+                    </Box>
+                </Toolbar>
+            </AppBar>
             <Box sx={{ display: 'flex', justifyContent: "space-between", mb: 3 }}>
-                <Box>
+                {/* <Box>
                     <Button onClick={() => navigate(`/main/savollar/${page}`)}>Orqaga</Button>
-                </Box>
-                <Box> <Button
-                    onClick={goToPrev}
-                    disabled={currentIndex === 0}
-                    sx={{ mr: 2 }}
-                    variant="outlined"
-                >
-                    Oldingi
-                </Button>
-                    <Button
-                        onClick={goToNext}
-                        disabled={currentIndex === questions.length - 1}
-                        variant="outlined"
-                    >
-                        Keyingi
-                    </Button></Box>
+                </Box> */}
+
             </Box>
 
             <SavolImage
@@ -210,25 +250,26 @@ export default function SavolDetails() {
                 comment={question.comment}
                 expert_commit={question.expertComment}
                 onImageUpload={handleImageUpload}
+                
             />
 
 
 
             {/* Save Button */}
-            <Box mb={4} display="flex" container spacing={4} alignItems="stretch" justifyContent={"center"} pt={"40px"}>
-                <Box gutterBottom display={"flex"} flexDirection={"row"} gap={"30px"} 
+            {/* <Box mb={4} display="flex" container spacing={4} alignItems="stretch" justifyContent={"center"} pt={"40px"}>
+                <Box gutterBottom display={"flex"} flexDirection={"row"} gap={"30px"}
                     sx={{
-                        backgroundColor: "rgba(83, 125, 193, 0.189)", 
+                        backgroundColor: "rgba(83, 125, 193, 0.189)",
                         padding: "16px",
                         borderRadius: "10px",
-                     
+
                     }}>
                     <h3> Bilet : {currentPage}</h3>
                     <h3>Savol :  {questionNumber}</h3>
                 </Box>
 
-            </Box>
-            <Grid container spacing={4} alignItems="stretch" justifyContent={"space-between"}>
+            </Box> */}
+            <Grid container spacing={4} alignItems="stretch" justifyContent={"space-between"} marginTop={'20px'}>
                 {/* O‘zbekcha */}
                 <Grid item xs={12} md={6} >
                     <Paper elevation={3} sx={{ p: 3, height: '100%', display: 'flex', flexDirection: 'column', gap: 2, width: '450px' }}>
@@ -264,15 +305,7 @@ export default function SavolDetails() {
                         />
                     </Paper>
                 </Grid>
-                <Button
-                    variant="contained"
-                    color="primary"
-                    size="large"
-                    onClick={handleSave}
-                    disabled={saving}
-                >
-                    {saving ? "Saqlanmoqda..." : "Saqlash"}
-                </Button>
+
             </Grid>
 
             <SavolOptions
@@ -291,12 +324,7 @@ export default function SavolDetails() {
                     }));
                 }}
             />
-            <Box display={"flex"} justifyContent={"space-between"}>
 
-                <DeleteButton
-                    id={question.id}
-                    onDelete={() => navigate("/main/savollar")} />
-            </Box>
 
         </Box>
     );

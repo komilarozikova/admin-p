@@ -48,12 +48,10 @@ const DeleteButton = ({ id, onDelete }) => {
 
   return (
     <Button
-      variant="outlined"
       color="error"
       startIcon={<DeleteIcon />}
       onClick={handleDelete}
     >
-      O‘chirish
     </Button>
   );
 };

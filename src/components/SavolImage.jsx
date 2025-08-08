@@ -84,7 +84,7 @@ console.log(response);
         : `https://${imgUrl}`;
 
     return (
-        <Box display="flex" flexDirection="column" alignItems="center" my={4} gap={2}>
+        <Box display="flex" flexDirection="column" alignItems="center" my={4} gap={2} >
             <Box
                 component="img"
                 src={imageUrl}
