@@ -117,12 +117,13 @@ const SavolImage = ({ imgUrl, questionId, comment, expert_commit, onImageUpload 
                     {uploading ? '⏳' : <EditIcon />}
                     <input type="file" accept="image/*" hidden onChange={handleFileChange} />
                 </IconButton>
-                {error && (
+             
+            </Box>
+               {error && (
                     <Typography color="error" fontSize={14}>
                         Xatolik: {error}
                     </Typography>
                 )}
-            </Box>
         </Box>
     );
 };
