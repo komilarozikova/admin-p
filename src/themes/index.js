@@ -17,7 +17,7 @@ const theme = createTheme({
       main: colors.color_green,
     },
     neutral: {
-      main: colors.neutral_black,
+      main: colors,
       light: colors.neutral_grey_1,
       medium: colors.neutral_grey_2,
       dark: colors.neutral_grey_3,

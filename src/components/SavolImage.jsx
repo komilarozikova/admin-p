@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, IconButton, Typography } from '@mui/material';
+import EditIcon from "@mui/icons-material/Edit";
 
 const BASE_URL =
     import.meta.env.DEV
@@ -34,7 +35,7 @@ const SavolImage = ({ imgUrl, questionId, comment, expert_commit, onImageUpload 
                 },
                 body: formData,
             });
-console.log(response);
+            console.log(response);
             const result = await response.json();
             console.log("📥 Serverdan javob:", result);
             console.log("imgUrl:", imgUrl);
@@ -70,7 +71,7 @@ console.log(response);
 
                 </Typography>
 
-                <Button variant="outlined" color='#3c3c3c'  component="label" disabled={uploading}>
+                <Button variant="outlined" color='#3c3c3c' component="label" disabled={uploading}>
                     {uploading ? 'Yuklanmoqda...' : 'Rasmni tanlang'}
                     <input type="file" accept="image/*" hidden onChange={handleFileChange} />
                 </Button>
@@ -84,30 +85,44 @@ console.log(response);
         : `https://${imgUrl}`;
 
     return (
-        <Box display="flex" flexDirection="column" alignItems="center" my={4} gap={2} >
-            <Box
-                component="img"
-                src={imageUrl}
-                alt="Rasm"
-                sx={{
-                    maxWidth: '450px',
-                    width: '100%',
-                    borderRadius: 2,
-                    boxShadow: 3,
-                    objectFit: 'contain',
-                }}
-            />
-
-            <Button variant="contained" component="label" disabled={uploading}>
-                {uploading ? 'Yuklanmoqda...' : 'Rasmni tanlang'}
-                <input type="file" accept="image/*" hidden onChange={handleFileChange} />
-            </Button>
-
-            {error && (
-                <Typography color="error" fontSize={14}>
-                    Xatolik: {error}
-                </Typography>
-            )}
+        <Box display="flex" justifyContent="center">
+            <Box flexDirection="column" alignItems="center" my={4} gap={2} position="relative" display="inline-block">
+                <Box
+                    component="img"
+                    src={imageUrl}
+                    alt="Rasm"
+                    sx={{
+                        maxWidth: '450px',
+                        width: '100%',
+                        borderRadius: 2,
+                        boxShadow: 3,
+                        objectFit: 'contain',
+                        display: 'block'
+                    }}
+                />
+                <IconButton
+                    component="label"
+                    disabled={uploading}
+                    sx={{
+                        position: 'absolute',
+                        bottom: 0,
+                        right: 0,
+                        backgroundColor: 'rgba(0, 0, 0, 0.542)',
+                        color: 'white',
+                        '&:hover': {
+                            backgroundColor: 'rgba(0,0,0,0.8)'
+                        }
+                    }}
+                >
+                    {uploading ? '⏳' : <EditIcon />}
+                    <input type="file" accept="image/*" hidden onChange={handleFileChange} />
+                </IconButton>
+                {error && (
+                    <Typography color="error" fontSize={14}>
+                        Xatolik: {error}
+                    </Typography>
+                )}
+            </Box>
         </Box>
     );
 };

@@ -153,10 +153,6 @@ export default function SavolDetails() {
 
     if (loading) return <CircularProgress />;
 
-
-
-
-
     const goToPrev = () => {
         if (currentIndex > 0) {
             const prevId = questions[currentIndex - 1].id;
@@ -186,7 +182,7 @@ export default function SavolDetails() {
     console.log(currentPage)
     console.log(questionNumber)
     return (
-        <Box sx={{ pl: 8, pr: 8 }}>
+        <Box >
             <AppBar
                 position="sticky"
                 elevation={4} // shadow chuqurligi: 0 - 24 oralig'ida
@@ -194,6 +190,7 @@ export default function SavolDetails() {
                     backgroundColor: 'white',
                     color: 'black',
                     px: 2,
+
                 }}
             >
                 <Toolbar disableGutters sx={{ justifyContent: 'space-between' }}>
@@ -219,7 +216,7 @@ export default function SavolDetails() {
                         </Button>
                         <Button
                             onClick={goToNext}
-                             sx={{ mr: 2 }}
+                            sx={{ mr: 2 }}
                             disabled={currentIndex === questions.length - 1}
                             variant="outlined"
                         >
@@ -237,95 +234,69 @@ export default function SavolDetails() {
                     </Box>
                 </Toolbar>
             </AppBar>
-            <Box sx={{ display: 'flex', justifyContent: "space-between", mb: 3 }}>
-                {/* <Box>
-                    <Button onClick={() => navigate(`/main/savollar/${page}`)}>Orqaga</Button>
-                </Box> */}
-
-            </Box>
-
-            <SavolImage
-                imgUrl={question.imgUrl}
-                questionId={question.id}
-                comment={question.comment}
-                expert_commit={question.expertComment}
-                onImageUpload={handleImageUpload}
-                
-            />
-
-
-
-            {/* Save Button */}
-            {/* <Box mb={4} display="flex" container spacing={4} alignItems="stretch" justifyContent={"center"} pt={"40px"}>
-                <Box gutterBottom display={"flex"} flexDirection={"row"} gap={"30px"}
-                    sx={{
-                        backgroundColor: "rgba(83, 125, 193, 0.189)",
-                        padding: "16px",
-                        borderRadius: "10px",
-
-                    }}>
-                    <h3> Bilet : {currentPage}</h3>
-                    <h3>Savol :  {questionNumber}</h3>
+            <Box sx={{pl: 20, pr: 20}}>
+                <Box sx={{ display: 'flex', justifyContent: "space-between", mb: 3 }}>
                 </Box>
+                <SavolImage
+                    imgUrl={question.imgUrl}
+                    questionId={question.id}
+                    comment={question.comment}
+                    expert_commit={question.expertComment}
+                    onImageUpload={handleImageUpload}
+                />
+                <Grid container spacing={4} alignItems="stretch" justifyContent={"space-between"} marginTop={'20px'}>
+                    {/* O‘zbekcha */}
+                    <Grid item xs={12} md={6} >
+                        <Paper elevation={3} sx={{ p: 3, height: '100%', display: 'flex', flexDirection: 'column', gap: 2, width: '450px' }}>
+                            <Typography variant="subtitle1" color="text.secondary">
+                                O‘zbekcha:
+                            </Typography>
+                            <Typography variant="body1">{question?.question_uz}</Typography>
+                            <TextField
+                                label="O‘zbekcha savolni tahrirlang"
+                                multiline
+                                minRows={3}
+                                fullWidth
+                                value={editedUz}
+                                onChange={(e) => setEditedUz(e.target.value)}
+                            />
+                        </Paper>
+                    </Grid>
 
-            </Box> */}
-            <Grid container spacing={4} alignItems="stretch" justifyContent={"space-between"} marginTop={'20px'}>
-                {/* O‘zbekcha */}
-                <Grid item xs={12} md={6} >
-                    <Paper elevation={3} sx={{ p: 3, height: '100%', display: 'flex', flexDirection: 'column', gap: 2, width: '450px' }}>
-                        <Typography variant="subtitle1" color="text.secondary">
-                            O‘zbekcha:
-                        </Typography>
-                        <Typography variant="body1">{question?.question_uz}</Typography>
-                        <TextField
-                            label="O‘zbekcha savolni tahrirlang"
-                            multiline
-                            minRows={3}
-                            fullWidth
-                            value={editedUz}
-                            onChange={(e) => setEditedUz(e.target.value)}
-                        />
-                    </Paper>
+                    {/* Русский */}
+                    <Grid item xs={12} md={6}>
+                        <Paper elevation={3} sx={{ p: 3, height: '100%', display: 'flex', flexDirection: 'column', gap: 2, width: '450px' }}>
+                            <Typography variant="subtitle1" color="text.secondary">
+                                Русский:
+                            </Typography>
+                            <Typography variant="body1">{question?.question_ru}</Typography>
+                            <TextField
+                                label="Изменить вопрос (рус)"
+                                multiline
+                                minRows={3}
+                                fullWidth
+                                value={editedRu}
+                                onChange={(e) => setEditedRu(e.target.value)}
+                            />
+                        </Paper>
+                    </Grid>
+
                 </Grid>
-
-                {/* Русский */}
-                <Grid item xs={12} md={6}>
-                    <Paper elevation={3} sx={{ p: 3, height: '100%', display: 'flex', flexDirection: 'column', gap: 2, width: '450px' }}>
-                        <Typography variant="subtitle1" color="text.secondary">
-                            Русский:
-                        </Typography>
-                        <Typography variant="body1">{question?.question_ru}</Typography>
-                        <TextField
-                            label="Изменить вопрос (рус)"
-                            multiline
-                            minRows={3}
-                            fullWidth
-                            value={editedRu}
-                            onChange={(e) => setEditedRu(e.target.value)}
-                        />
-                    </Paper>
-                </Grid>
-
-            </Grid>
-
-            <SavolOptions
-                optionsUz={question.optionsUz}
-                optionsRu={question.optionsRu}
-                setQuestion={setQuestion}
-            />
-
-
-            <SavolComment
-                question={question}
-                onSave={(updated) => {
-                    setQuestion(prev => ({
-                        ...prev,
-                        ...updated,
-                    }));
-                }}
-            />
-
-
+                <SavolOptions
+                    optionsUz={question.optionsUz}
+                    optionsRu={question.optionsRu}
+                    setQuestion={setQuestion}
+                />
+                <SavolComment
+                    question={question}
+                    onSave={(updated) => {
+                        setQuestion(prev => ({
+                            ...prev,
+                            ...updated,
+                        }));
+                    }}
+                />
+            </Box>
         </Box>
     );
 

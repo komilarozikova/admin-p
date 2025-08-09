@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { TextField, Button, Box, Typography } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
+import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
+import BeenhereIcon from '@mui/icons-material/Beenhere';
 
 const BASE_URL =
     import.meta.env.DEV
@@ -83,6 +85,9 @@ export default function SavolComment({ question, onSave }) {
             setSaving(false);
         }
     };
+
+
+
     const handleDeleteUzComment = async () => {
         const updated = {
             ...lastSavedComment,
@@ -143,128 +148,132 @@ export default function SavolComment({ question, onSave }) {
         }
     };
 
-// Foydalanuvchi izohi (RU) ni o‘chirish
-const handleDeleteRuExpertComment = async () => {
-    const updated = {
-        ...lastSavedComment,
-        expertCommentRu: "",
+    // Foydalanuvchi izohi (RU) ni o‘chirish
+    const handleDeleteRuExpertComment = async () => {
+        const updated = {
+            ...lastSavedComment,
+            expertCommentRu: "",
+        };
+        setLastSavedComment(updated);
+        localStorage.setItem(`comment-${question.id}`, JSON.stringify(updated));
+
+        try {
+            await fetch(`${BASE_URL}/api/avto-test/questions/${question.id}`, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ...`,
+                },
+                body: JSON.stringify({
+                    ...question,
+                    commentRu: updated.commentRu,
+                    comment: updated.comment,
+                    expertComment: updated.expertComment,
+                    expertCommentRu: " ",
+                }),
+            });
+        } catch (err) {
+            console.error("UZ komment o‘chirish xatosi:", err);
+            alert("UZ kommentni o‘chirishda xatolik.");
+        }
     };
-    setLastSavedComment(updated);
-    localStorage.setItem(`comment-${question.id}`, JSON.stringify(updated));
 
-    try {
-        await fetch(`${BASE_URL}/api/avto-test/questions/${question.id}`, {
-            method: "PATCH",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ...`,
-            },
-            body: JSON.stringify({
-                ...question,
-                commentRu: updated.commentRu,
-                comment: updated.comment,
-                expertComment: updated.expertComment,
-                expertCommentRu: " ",
-            }),
-        });
-    } catch (err) {
-        console.error("UZ komment o‘chirish xatosi:", err);
-        alert("UZ kommentni o‘chirishda xatolik.");
-    }
-};
+    // Foydalanuvchi izohi (RU) ni o‘chirish
+    const handleDeleteRuComment = async () => {
+        const updated = {
+            ...lastSavedComment,
+            commentRu: "",
+        };
+        setLastSavedComment(updated);
+        localStorage.setItem(`comment-${question.id}`, JSON.stringify(updated));
 
-// Foydalanuvchi izohi (RU) ni o‘chirish
-const handleDeleteRuComment = async () => {
-    const updated = {
-        ...lastSavedComment,
-        commentRu: "",
+        try {
+            await fetch(`${BASE_URL}/api/avto-test/questions/${question.id}`, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ...`,
+                },
+                body: JSON.stringify({
+                    ...question,
+                    comment: updated.comment,
+                    commentRu: "",
+                    expertComment: updated.expertComment,
+                    expertCommentRu: updated.expertCommentRu,
+                }),
+            });
+        } catch (err) {
+            console.error("RU komment o‘chirish xatosi:", err);
+            alert("RU kommentni o‘chirishda xatolik.");
+        }
     };
-    setLastSavedComment(updated);
-    localStorage.setItem(`comment-${question.id}`, JSON.stringify(updated));
-
-    try {
-        await fetch(`${BASE_URL}/api/avto-test/questions/${question.id}`, {
-            method: "PATCH",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ...`,
-            },
-            body: JSON.stringify({
-                ...question,
-                comment: updated.comment,
-                commentRu: "",
-                expertComment: updated.expertComment,
-                expertCommentRu: updated.expertCommentRu,
-            }),
-        });
-    } catch (err) {
-        console.error("RU komment o‘chirish xatosi:", err);
-        alert("RU kommentni o‘chirishda xatolik.");
-    }
-};
 
     return (
-        <Box mt={4} mb={4} display="flex" flexDirection="row" justifyContent={"space-between"} gap={2}>
-          <Box width={"100%"}>
-              <Typography variant="h6">Izohlar</Typography>
+        <Box>
+            <Box mt={4} mb={4} display="flex" flexDirection="row" justifyContent={"space-between"} gap={2}>
+                <Box width={"100%"}>
 
-            <Box mt={4} mb={4} display="flex" flexDirection="row" gap={4} width={"100%"}>
-                {/* O'zbekcha blok */}
-                <Box flex={1} display="flex" flexDirection="column" gap={2}>
-                    <Typography variant="h6">O'zbekcha izohlar</Typography>
+                    <Box mt={4} mb={4} display="flex" flexDirection="row" gap={4} width={"100%"}>
+                        {/* O'zbekcha blok */}
+                        <Box flex={1} display="flex" flexDirection="column" gap={2}>
+                            <Typography variant="h6">O'zbekcha izohlar</Typography>
 
-                    <TextField
-                        label="Foydalanuvchi izohi (UZ)"
-                        multiline
-                        fullWidth
-                        minRows={1}
-                        value={comment}
-                        onChange={(e) => setComment(e.target.value)}
-                    />
-                    <TextField
-                        label="Ekspert izohi (UZ)"
-                        multiline
-                        fullWidth
-                        minRows={1}
-                        value={expertComment}
-                        onChange={(e) => setExpertComment(e.target.value)}
-                    />
+                            <TextField
+                                label="Foydalanuvchi izohi (UZ)"
+                                multiline
+                                fullWidth
+                                minRows={1}
+                                value={comment}
+                                onChange={(e) => setComment(e.target.value)}
+                            />
+                            <TextField
+                                label="Ekspert izohi (UZ)"
+                                multiline
+                                fullWidth
+                                minRows={1}
+                                value={expertComment}
+                                onChange={(e) => setExpertComment(e.target.value)}
+                            />
+                        </Box>
+
+                        {/* Ruscha blok */}
+                        <Box flex={1} display="flex" flexDirection="column" gap={2}>
+                            <Typography variant="h6">Русские комментарии</Typography>
+
+                            <TextField
+                                label="Комментарий пользователя (RU)"
+                                multiline
+                                fullWidth
+                                minRows={1}
+                                value={commentRu}
+                                onChange={(e) => setCommentRu(e.target.value)}
+                            />
+                            <TextField
+                                label="Комментарий эксперта (RU)"
+                                multiline
+                                fullWidth
+                                minRows={1}
+                                value={expertCommentRu}
+                                onChange={(e) => setExpertCommentRu(e.target.value)}
+                            />
+                        </Box>
+                    </Box>
                 </Box>
 
-                {/* Ruscha blok */}
-                <Box flex={1} display="flex" flexDirection="column" gap={2}>
-                    <Typography variant="h6">Русские комментарии</Typography>
-
-                    <TextField
-                        label="Комментарий пользователя (RU)"
-                        multiline
-                        fullWidth
-                        minRows={1}
-                        value={commentRu}
-                        onChange={(e) => setCommentRu(e.target.value)}
-                    />
-                    <TextField
-                        label="Комментарий эксперта (RU)"
-                        multiline
-                        fullWidth
-                        minRows={1}
-                        value={expertCommentRu}
-                        onChange={(e) => setExpertCommentRu(e.target.value)}
-                    />
+                <Box display={"flex"} alignItems={"center"} paddingTop={"60px"}>
+                    <Button variant="contained" color="#7d7c7c" onClick={handleSave} disabled={saving}>
+                        {saving ? "Saqlanmoqda..." : <LibraryAddIcon />}
+                    </Button>
                 </Box>
+
+                {saved && (
+                    <Typography sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        paddingTop: '60px'
+                    }} color="success.main">✅ </Typography>
+                )}
             </Box>
-          </Box>
-
-         <Box display={"flex"} alignItems={"center"} paddingTop={"72px"}>
-               <Button variant="contained" color="primary" onClick={handleSave} disabled={saving}>
-                {saving ? "Saqlanmoqda..." : "Izohlarni saqlash"}
-            </Button>
-         </Box>
-
-            {saved && (
-                <Typography color="success.main">✅ Saqlandi!</Typography>
-            )}
-
             {lastSavedComment && (
                 <Box mt={2} display="flex" gap={2}>
                     {/* Uzbekcha blok */}
