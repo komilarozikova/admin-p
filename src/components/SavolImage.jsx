@@ -85,7 +85,7 @@ const SavolImage = ({ imgUrl, questionId, comment, expert_commit, onImageUpload 
         : `https://${imgUrl}`;
 
     return (
-        <Box display="flex" justifyContent="center">
+        <Box display="flex" justifyContent="center" flexDirection="column" alignItems="center">
             <Box flexDirection="column" alignItems="center" my={4} gap={2} position="relative" display="inline-block">
                 <Box
                     component="img"
