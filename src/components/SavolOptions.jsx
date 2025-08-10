@@ -114,13 +114,13 @@ const handleSave = (option, lang, newValue) => {
         Variantlar (UZ / RU)
       </Typography>
       <Grid container spacing={4} justifyContent="space-between">
-        <Grid item xs={12} md={6} width={"400px"}>
+        <Grid item xs={12} md={6} width={"48%"}>
           <Typography variant="subtitle1" gutterBottom>
             O'zbekcha
           </Typography>
           {optionsUz.map((opt, idx) => renderOption(opt, idx, "uz"))}
         </Grid>
-        <Grid item xs={12} md={6} width={"400px"}>
+        <Grid item xs={12} md={6} width={"48%"}>
           <Typography variant="subtitle1" gutterBottom>
             Русский
           </Typography>

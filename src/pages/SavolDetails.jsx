@@ -244,10 +244,10 @@ export default function SavolDetails() {
                     expert_commit={question.expertComment}
                     onImageUpload={handleImageUpload}
                 />
-                <Grid container spacing={4} alignItems="stretch" justifyContent={"space-between"} marginTop={'20px'}>
+                <Grid container spacing={4} justifyContent={"space-between"} marginTop={'20px'}>
                     {/* O‘zbekcha */}
-                    <Grid item xs={12} md={6} >
-                        <Paper elevation={3} sx={{ p: 3, height: '100%', display: 'flex', flexDirection: 'column', gap: 2, width: '400px' }}>
+                    <Grid item xs={12} md={6} width={"48%"}>
+                        <Paper elevation={3} sx={{ p: 3, height: '100%', display: 'flex', flexDirection: 'column', gap: 2}}>
                             <Typography variant="subtitle1" color="text.secondary">
                                 O‘zbekcha:
                             </Typography>
@@ -264,8 +264,8 @@ export default function SavolDetails() {
                     </Grid>
 
                     {/* Русский */}
-                    <Grid item xs={12} md={6}>
-                        <Paper elevation={3} sx={{ p: 3, height: '100%', display: 'flex', flexDirection: 'column', gap: 2, width: '400px' }}>
+                    <Grid item xs={12} md={6} width={"48%"}>
+                        <Paper elevation={3} sx={{ p: 3, height: '100%', display: 'flex', flexDirection: 'column', gap: 2 }}>
                             <Typography variant="subtitle1" color="text.secondary">
                                 Русский:
                             </Typography>
@@ -280,7 +280,6 @@ export default function SavolDetails() {
                             />
                         </Paper>
                     </Grid>
-
                 </Grid>
                 <SavolOptions
                     optionsUz={question.optionsUz}
