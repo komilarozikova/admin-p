@@ -349,7 +349,7 @@ return (
 
         </Box>
         {lastSavedComment && (
-            <Box mt={2} mb={4} display="flex" gap={4}>
+            <Box mt={2} mb={6} display="flex" gap={4}>
                 {/* Uzbekcha blok */}
                 <Box flex={1} display="flex" flexDirection="column" gap={2}>
                     {/* Foydalanuvchi izohi */}
