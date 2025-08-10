@@ -234,7 +234,7 @@ export default function SavolDetails() {
                     </Box>
                 </Toolbar>
             </AppBar>
-            <Box sx={{pl: 20, pr: 20}}>
+            <Box sx={{pl: 10, pr: 10}}>
                 <Box sx={{ display: 'flex', justifyContent: "space-between", mb: 3 }}>
                 </Box>
                 <SavolImage

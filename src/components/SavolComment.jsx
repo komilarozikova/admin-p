@@ -224,7 +224,7 @@ const handleDeleteRuComment = async () => {
 
 return (
     <Box>
-        <Box mt={4} mb={4} display="flex" flexDirection="row" justifyContent={"space-between"} gap={4}>
+        <Box mb={4} display="flex" flexDirection="row" justifyContent={"space-between"} gap={4}>
             <Box width={"100%"}>
 
                 <Box mt={4} mb={4} display="flex" flexDirection="row" gap={4} width={"100%"}>
@@ -349,7 +349,7 @@ return (
 
         </Box>
         {lastSavedComment && (
-            <Box mt={2} display="flex" gap={4}>
+            <Box mt={2} mb={4} display="flex" gap={4}>
                 {/* Uzbekcha blok */}
                 <Box flex={1} display="flex" flexDirection="column" gap={2}>
                     {/* Foydalanuvchi izohi */}
