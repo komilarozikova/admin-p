@@ -247,7 +247,7 @@ export default function SavolDetails() {
                 <Grid container spacing={4} alignItems="stretch" justifyContent={"space-between"} marginTop={'20px'}>
                     {/* O‘zbekcha */}
                     <Grid item xs={12} md={6} >
-                        <Paper elevation={3} sx={{ p: 3, height: '100%', display: 'flex', flexDirection: 'column', gap: 2, width: '450px' }}>
+                        <Paper elevation={3} sx={{ p: 3, height: '100%', display: 'flex', flexDirection: 'column', gap: 2, width: '400px' }}>
                             <Typography variant="subtitle1" color="text.secondary">
                                 O‘zbekcha:
                             </Typography>
@@ -265,7 +265,7 @@ export default function SavolDetails() {
 
                     {/* Русский */}
                     <Grid item xs={12} md={6}>
-                        <Paper elevation={3} sx={{ p: 3, height: '100%', display: 'flex', flexDirection: 'column', gap: 2, width: '450px' }}>
+                        <Paper elevation={3} sx={{ p: 3, height: '100%', display: 'flex', flexDirection: 'column', gap: 2, width: '400px' }}>
                             <Typography variant="subtitle1" color="text.secondary">
                                 Русский:
                             </Typography>
