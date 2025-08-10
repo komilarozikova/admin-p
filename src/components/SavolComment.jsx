@@ -5,10 +5,10 @@ import IconButton from "@mui/material/IconButton";
 import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
 import AddIcon from '@mui/icons-material/Add';
 
-// const BASE_URL =
-//     import.meta.env.DEV
-//         ? "/api"
-//         : "https://alibekmoyliyev.uz";
+const BASE_URL =
+    import.meta.env.DEV
+        ? "/api"
+        : "https://alibekmoyliyev.uz";
 
 export default function SavolComment({ question, onSave }) {
     const [comment, setComment] = useState(question.comment || "");
@@ -48,7 +48,7 @@ const handleSaveField = async (fieldName, value) => {
             [fieldName]: value, // faqat shu field yangilanadi
         };
 
-        const response = await fetch(`/api/avto-test/questions/${question.id}`, {
+        const response = await fetch(`${BASE_URL}/api/avto-test/questions/${question.id}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
@@ -99,7 +99,7 @@ const handleDeleteUzComment = async () => {
     localStorage.setItem(`comment-${question.id}`, JSON.stringify(updated));
 
     try {
-        await fetch(`/api/avto-test/questions/${question.id}`, {
+        await fetch(`${BASE_URL}/api/avto-test/questions/${question.id}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
@@ -133,7 +133,7 @@ const handleDeleteUzExpertComment = async () => {
     localStorage.setItem(`comment-${question.id}`, JSON.stringify(updated));
 
     try {
-        await fetch(`/api/avto-test/questions/${question.id}`, {
+        await fetch(`${BASE_URL}/api/avto-test/questions/${question.id}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
@@ -167,7 +167,7 @@ const handleDeleteRuExpertComment = async () => {
     localStorage.setItem(`comment-${question.id}`, JSON.stringify(updated));
 
     try {
-        await fetch(`/api/avto-test/questions/${question.id}`, {
+        await fetch(`${BASE_URL}/api/avto-test/questions/${question.id}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
@@ -202,7 +202,7 @@ const handleDeleteRuComment = async () => {
     localStorage.setItem(`comment-${question.id}`, JSON.stringify(updated));
 
     try {
-        await fetch(`/api/avto-test/questions/${question.id}`, {
+        await fetch(`${BASE_URL}/api/avto-test/questions/${question.id}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",

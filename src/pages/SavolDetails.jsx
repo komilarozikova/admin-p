@@ -22,10 +22,10 @@ import axios from "axios";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-// const BASE_URL =
-//     import.meta.env.DEV
-//         ? "/api"
-//         : "https://alibekmoyliyev.uz";
+const BASE_URL =
+    import.meta.env.DEV
+        ? "/api"
+        : "https://alibekmoyliyev.uz";
 
 export default function SavolDetails() {
     const { page, id } = useParams(); // page = questionSetNumber, id = current question ID
@@ -47,7 +47,7 @@ export default function SavolDetails() {
         const fetchQuestions = async () => {
             try {
                 const res = await axios.get(
-                    `/api/avto-test/questions/get-questions-for-admin?questionSetNumber=${page}`,
+                    `${BASE_URL}/api/avto-test/questions/get-questions-for-admin?questionSetNumber=${page}`,
                     {
                         headers: { Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1NThmZGVhMS1iMGRhLTRjZjYtYmRmZS00MmMyYjg0ZjMzZjIiLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NTM1MzE4ODksImV4cCI6MTc1NDEzNjY4OX0.uV4yR2tCKnfHteyr0N6exV7FRMeiX2AWIlZGAIiHhdw` },
                     }
@@ -69,7 +69,7 @@ export default function SavolDetails() {
     }, [page, id]);
 
     useEffect(() => {
-        fetch(`/api/avto-test/questions/${id}`)
+        fetch(`${BASE_URL}/api/avto-test/questions/${id}`)
             .then(async (res) => {
                 if (!res.ok) {
                     const errText = await res.text();
