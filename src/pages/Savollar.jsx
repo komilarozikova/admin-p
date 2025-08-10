@@ -10,10 +10,10 @@ import {
 } from '@mui/material';
 import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
 
-const BASE_URL =
-    import.meta.env.DEV
-        ? "/api"
-        : "https://alibekmoyliyev.uz";
+// const BASE_URL =
+//     import.meta.env.DEV
+//         ? "/api"
+//         : "https://alibekmoyliyev.uz";
 
 function Savollar() {
     const [questions, setQuestions] = useState([]);
@@ -33,7 +33,7 @@ function Savollar() {
     useEffect(() => {
         const fetchTotalCount = async () => {
             try {
-                const res = await axios.get(`${BASE_URL}/api/avto-test/questions/get-count-questions`, {
+                const res = await axios.get(`/api/avto-test/questions/get-count-questions`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -54,7 +54,7 @@ function Savollar() {
     useEffect(() => {
         const fetchQuestions = async () => {
             try {
-                const res = await axios.get(`${BASE_URL}/api/avto-test/questions/get-questions-for-admin?questionSetNumber=${currentPage}`, {
+                const res = await axios.get(`/api/avto-test/questions/get-questions-for-admin?questionSetNumber=${currentPage}`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
