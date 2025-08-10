@@ -89,6 +89,10 @@ export default function SavolComment({ question, onSave }) {
 
 
     const handleDeleteUzComment = async () => {
+        const confirmDelete = window.confirm(
+            "Rostdan ham bu izohni o‘chirmoqchimisiz?"
+        );
+        if (!confirmDelete) return;
         const updated = {
             ...lastSavedComment,
             comment: "",
@@ -119,6 +123,10 @@ export default function SavolComment({ question, onSave }) {
     };
 
     const handleDeleteUzExpertComment = async () => {
+        const confirmDelete = window.confirm(
+            "Rostdan ham bu izohni o‘chirmoqchimisiz?"
+        );
+        if (!confirmDelete) return;
         const updated = {
             ...lastSavedComment,
             expertComment: "",
@@ -150,6 +158,10 @@ export default function SavolComment({ question, onSave }) {
 
     // Foydalanuvchi izohi (RU) ni o‘chirish
     const handleDeleteRuExpertComment = async () => {
+        const confirmDelete = window.confirm(
+            "Rostdan ham bu izohni o‘chirmoqchimisiz?"
+        );
+        if (!confirmDelete) return;
         const updated = {
             ...lastSavedComment,
             expertCommentRu: "",
@@ -180,6 +192,11 @@ export default function SavolComment({ question, onSave }) {
 
     // Foydalanuvchi izohi (RU) ni o‘chirish
     const handleDeleteRuComment = async () => {
+        const confirmDelete = window.confirm(
+            "Rostdan ham bu izohni o‘chirmoqchimisiz?"
+        );
+        if (!confirmDelete) return;
+
         const updated = {
             ...lastSavedComment,
             commentRu: "",
