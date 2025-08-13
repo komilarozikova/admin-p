@@ -106,7 +106,7 @@ function Savollar() {
                                     Savol {index + 1}:
                                 </Typography>
                                 <Typography variant="body1">
-                                    {question.question_uz}
+                                    {question.questionUz}
                                 </Typography>
                             </CardContent>
                         </Card>
