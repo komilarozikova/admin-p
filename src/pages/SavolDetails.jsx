@@ -25,7 +25,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 const BASE_URL =
     import.meta.env.DEV
         ? "/api"
-        : "https://alibekmoyliyev.uz";
+        : "https://api.alibekmoyliyev.uz";
 
 export default function SavolDetails() {
     const { page, id } = useParams(); // page = questionSetNumber, id = current question ID
@@ -49,7 +49,7 @@ export default function SavolDetails() {
                 const res = await axios.get(
                     `${BASE_URL}/api/avto-test/questions/get-questions-for-admin?questionSetNumber=${page}`,
                     {
-                        headers: { Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1NThmZGVhMS1iMGRhLTRjZjYtYmRmZS00MmMyYjg0ZjMzZjIiLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NTM1MzE4ODksImV4cCI6MTc1NDEzNjY4OX0.uV4yR2tCKnfHteyr0N6exV7FRMeiX2AWIlZGAIiHhdw` },
+                        headers: { Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1NThmZGVhMS1iMGRhLTRjZjYtYmRmZS00MmMyYjg0ZjMzZjIiLCJyb2xlIjoiU1VQRVJfQURNSU4iLCJpYXQiOjE3NTUwODAzNDMsImV4cCI6MTc1NTY4NTE0M30.jmdCseTiwcWuDCBgrwBLqNXZKzgpRYn0UHniqhrotfw` },
                     }
                 );
                 const questionList = res.data.data;
@@ -79,8 +79,8 @@ export default function SavolDetails() {
             })
             .then((data) => {
                 setQuestion(data);
-                setEditedUz(data.question_uz || "");
-                setEditedRu(data.question_ru || "");
+                setEditedUz(data.questionUz || "");
+                setEditedRu(data.questionRu || "");
                 setLoading(false);
             })
             .catch((err) => {
@@ -97,12 +97,12 @@ export default function SavolDetails() {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1NThmZGVhMS1iMGRhLTRjZjYtYmRmZS00MmMyYjg0ZjMzZjIiLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NTM1MzE4ODksImV4cCI6MTc1NDEzNjY4OX0.uV4yR2tCKnfHteyr0N6exV7FRMeiX2AWIlZGAIiHhdw`,
+                Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1NThmZGVhMS1iMGRhLTRjZjYtYmRmZS00MmMyYjg0ZjMzZjIiLCJyb2xlIjoiU1VQRVJfQURNSU4iLCJpYXQiOjE3NTUwODAzNDMsImV4cCI6MTc1NTY4NTE0M30.jmdCseTiwcWuDCBgrwBLqNXZKzgpRYn0UHniqhrotfw`,
             },
             body: JSON.stringify({
                 ...question,
-                question_uz: editedUz,
-                question_ru: editedRu,
+                questionUz: editedUz,
+                questionRu: editedRu,
                 optionsUz: question.optionsUz,
                 optionsRu: question.optionsRu,
             }),
@@ -131,7 +131,7 @@ export default function SavolDetails() {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1NThmZGVhMS1iMGRhLTRjZjYtYmRmZS00MmMyYjg0ZjMzZjIiLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NTM1MzE4ODksImV4cCI6MTc1NDEzNjY4OX0.uV4yR2tCKnfHteyr0N6exV7FRMeiX2AWIlZGAIiHhdw`,
+                Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1NThmZGVhMS1iMGRhLTRjZjYtYmRmZS00MmMyYjg0ZjMzZjIiLCJyb2xlIjoiU1VQRVJfQURNSU4iLCJpYXQiOjE3NTUwODAzNDMsImV4cCI6MTc1NTY4NTE0M30.jmdCseTiwcWuDCBgrwBLqNXZKzgpRYn0UHniqhrotfw`,
             },
             body: JSON.stringify({
                 ...question,
@@ -251,7 +251,7 @@ export default function SavolDetails() {
                             <Typography variant="subtitle1" color="text.secondary">
                                 O‘zbekcha:
                             </Typography>
-                            <Typography variant="body1">{question?.question_uz}</Typography>
+                            <Typography variant="body1">{question?.questionUz}</Typography>
                             <TextField
                                 label="O‘zbekcha savolni tahrirlang"
                                 multiline
@@ -269,7 +269,7 @@ export default function SavolDetails() {
                             <Typography variant="subtitle1" color="text.secondary">
                                 Русский:
                             </Typography>
-                            <Typography variant="body1">{question?.question_ru}</Typography>
+                            <Typography variant="body1">{question?.questionRu}</Typography>
                             <TextField
                                 label="Изменить вопрос (рус)"
                                 multiline
