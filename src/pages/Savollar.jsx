@@ -13,7 +13,7 @@ import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
 const BASE_URL =
     import.meta.env.DEV
         ? "/api"
-        : "https://alibekmoyliyev.uz";
+        : "https://api.alibekmoyliyev.uz";
 
 function Savollar() {
     const [questions, setQuestions] = useState([]);
