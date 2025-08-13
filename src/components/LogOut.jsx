@@ -7,7 +7,7 @@ export default function LogOut() {
     const navigate = useNavigate();
 
     const handleLogout = () => {
-        localStorage.removeItem("Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1NThmZGVhMS1iMGRhLTRjZjYtYmRmZS00MmMyYjg0ZjMzZjIiLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NTM1MzE4ODksImV4cCI6MTc1NDEzNjY4OX0.uV4yR2tCKnfHteyr0N6exV7FRMeiX2AWIlZGAIiHhdw"); // Tokenni o‘chiradi
+        localStorage.removeItem("Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1NThmZGVhMS1iMGRhLTRjZjYtYmRmZS00MmMyYjg0ZjMzZjIiLCJyb2xlIjoiU1VQRVJfQURNSU4iLCJpYXQiOjE3NTUwODAzNDMsImV4cCI6MTc1NTY4NTE0M30.jmdCseTiwcWuDCBgrwBLqNXZKzgpRYn0UHniqhrotfw"); // Tokenni o‘chiradi
         navigate("/"); // Login sahifasiga yo‘naltiradi
     };
 

@@ -68,26 +68,33 @@ export default function SavolDetails() {
         fetchQuestions();
     }, [page, id]);
 
-    useEffect(() => {
-        fetch(`${BASE_URL}/api/avto-test/questions/${id}`)
-            .then(async (res) => {
-                if (!res.ok) {
-                    const errText = await res.text();
-                    throw new Error(errText);
-                }
-                return res.json();
-            })
-            .then((data) => {
-                setQuestion(data);
-                setEditedUz(data.questionUz || "");
-                setEditedRu(data.questionRu || "");
-                setLoading(false);
-            })
-            .catch((err) => {
-                console.error("Error fetching question:", err);
-                setLoading(false);
-            });
-    }, [id]);
+ useEffect(() => {
+    fetch(`${BASE_URL}/api/avto-test/questions/${id}`, {
+        headers: {
+            "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1NThmZGVhMS1iMGRhLTRjZjYtYmRmZS00MmMyYjg0ZjMzZjIiLCJyb2xlIjoiU1VQRVJfQURNSU4iLCJpYXQiOjE3NTUwODAzNDMsImV4cCI6MTc1NTY4NTE0M30.jmdCseTiwcWuDCBgrwBLqNXZKzgpRYn0UHniqhrotfw",
+            "Content-Type": "application/json",
+        },
+    })
+        .then(async (res) => {
+            if (!res.ok) {
+                const errText = await res.text();
+                throw new Error(errText);
+            }
+            return res.json();
+        })
+        .then((data) => {
+            setQuestion(data);
+            setEditedUz(data.questionUz || "");
+            setEditedRu(data.questionRu || "");
+            setLoading(false);
+        })
+        .catch((err) => {
+            console.error("Error fetching question:", err);
+            setLoading(false);
+        });
+}, [id]);
+
+
 
 
     const handleSave = () => {

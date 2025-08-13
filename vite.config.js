@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://alibekmoyliyev.uz',
+        target: 'https://api.alibekmoyliyev.uz',
         changeOrigin: true,
         secure: false,
         // rewrite: (path) => path.replace(/^\/api/, ''), // kerak bo‘lmasa izohda qoldir

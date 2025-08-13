@@ -6,7 +6,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 const BASE_URL =
     import.meta.env.DEV
         ? "/api"
-        : "https://alibekmoyliyev.uz";
+        : "https://api.alibekmoyliyev.uz";
         
 const DeleteButton = ({ id, onDelete }) => {
   const handleDelete = async () => {
@@ -27,7 +27,7 @@ const DeleteButton = ({ id, onDelete }) => {
         method: "DELETE",
          headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1NThmZGVhMS1iMGRhLTRjZjYtYmRmZS00MmMyYjg0ZjMzZjIiLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NTM1MzE4ODksImV4cCI6MTc1NDEzNjY4OX0.uV4yR2tCKnfHteyr0N6exV7FRMeiX2AWIlZGAIiHhdw`,
+                Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1NThmZGVhMS1iMGRhLTRjZjYtYmRmZS00MmMyYjg0ZjMzZjIiLCJyb2xlIjoiU1VQRVJfQURNSU4iLCJpYXQiOjE3NTUwODAzNDMsImV4cCI6MTc1NTY4NTE0M30.jmdCseTiwcWuDCBgrwBLqNXZKzgpRYn0UHniqhrotfw`,
             },
       });
 
