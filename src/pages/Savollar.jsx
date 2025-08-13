@@ -10,10 +10,10 @@ import {
 } from '@mui/material';
 import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
 
-// const BASE_URL =
-//     import.meta.env.DEV
-//         ? "/api"
-//         : "https://api.alibekmoyliyev.uz";
+const BASE_URL =
+    import.meta.env.DEV
+        ? "/api"
+        : "https://api.alibekmoyliyev.uz";
 
 function Savollar() {
     const [questions, setQuestions] = useState([]);
