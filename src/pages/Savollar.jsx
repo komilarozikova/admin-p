@@ -33,7 +33,7 @@ function Savollar() {
     useEffect(() => {
         const fetchTotalCount = async () => {
             try {
-                const res = await axios.get(`/api/avto-test/questions/get-count-questions`, {
+                const res = await axios.get(`${BASE_URL}/api/avto-test/questions/get-count-questions`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -54,7 +54,7 @@ function Savollar() {
     useEffect(() => {
         const fetchQuestions = async () => {
             try {
-                const res = await axios.get(`/api/avto-test/questions/get-questions-for-admin?questionSetNumber=${currentPage}`, {
+                const res = await axios.get(`${BASE_URL}/api/avto-test/questions/get-questions-for-admin?questionSetNumber=${currentPage}`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
