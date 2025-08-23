@@ -8,6 +8,8 @@ import {
   IconButton,
 } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
+import { fetchWithAuth } from "../service/fetchWithAuth";
+
 
 
 const BASE_URL =
@@ -34,11 +36,10 @@ const handleSave = (option, lang, newValue) => {
   const apiLang = lang === "uz" ? "uz" : "ru";
   const endpoint = `${BASE_URL}/api/avto-test/options/${apiLang}/${apiLang}/${option.id}`;
 
-  fetch(endpoint, {
+  fetchWithAuth(endpoint, {
     method: "PATCH",
     headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1NThmZGVhMS1iMGRhLTRjZjYtYmRmZS00MmMyYjg0ZjMzZjIiLCJyb2xlIjoiU1VQRVJfQURNSU4iLCJpYXQiOjE3NTU4NDc4MDIsImV4cCI6MTc1NjQ1MjYwMn0.RaAYC8-aaZFqKFjKI3q8Y9U1cdFdBgYWakL9JEeSw1w`,
+      "Content-Type": "application/json"
     },
     body: JSON.stringify(updatedOption),
   })

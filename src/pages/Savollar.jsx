@@ -9,6 +9,7 @@ import {
     Stack,
 } from '@mui/material';
 import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
+import { fetchWithAuth } from '../service/fetchWithAuth';
 
 const BASE_URL =
     import.meta.env.DEV
@@ -27,47 +28,50 @@ function Savollar() {
 
 
 
-    const token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1NThmZGVhMS1iMGRhLTRjZjYtYmRmZS00MmMyYjg0ZjMzZjIiLCJyb2xlIjoiU1VQRVJfQURNSU4iLCJpYXQiOjE3NTU4NDc4MDIsImV4cCI6MTc1NjQ1MjYwMn0.RaAYC8-aaZFqKFjKI3q8Y9U1cdFdBgYWakL9JEeSw1w`;
 
     // Umumiy sahifa sonini olish
-    useEffect(() => {
-        const fetchTotalCount = async () => {
-            try {
-                const res = await axios.get(`${BASE_URL}/api/avto-test/questions/get-count-questions`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                });
+  useEffect(() => {
+  const fetchTotalCount = async () => {
+    try {
+      const res = await fetchWithAuth(
+        `${BASE_URL}/api/avto-test/questions/get-count-questions`
+      );
 
-                const totalQuestions = res.data.data.questionSetNumberCount;
-                const pages = totalQuestions;
-                setTotalPages(pages);
-                console.log("Total pages:", pages);
-            } catch (error) {
-                console.error("Xatolik sahifalar sonini olishda:", error);
-            }
-        };
+      const data = await res.json();
 
-        fetchTotalCount();
-    }, []);
+      const totalQuestions = data.data.questionSetNumberCount;
+
+      const pages = totalQuestions;
+      setTotalPages(pages);
+      console.log("Total pages:", pages);
+    } catch (error) {
+      console.error("Xatolik sahifalar sonini olishda:", error);
+    }
+  };
+
+  fetchTotalCount();
+}, []);
+
     // Har bir sahifada 1ta bilet (questionSetNumber) bo‘yicha savollarni olish
-    useEffect(() => {
-        const fetchQuestions = async () => {
-            try {
-                const res = await axios.get(`${BASE_URL}/api/avto-test/questions/get-questions-for-admin?questionSetNumber=${currentPage}`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                });
-                console.log(res.data);
-                setQuestions(res.data.data || []);
-            } catch (error) {
-                console.error("Xatolik savollarni olishda:", error);
-            }
-        };
+   useEffect(() => {
+  const fetchQuestions = async () => {
+    try {
+      const res = await fetchWithAuth(
+        `${BASE_URL}/api/avto-test/questions/get-questions-for-admin?questionSetNumber=${currentPage}`
+      );
 
-        fetchQuestions();
-    }, [currentPage]);
+      // fetch qaytarganini json qilib olish kerak
+      const data = await res.json();
+
+      console.log(data);
+      setQuestions(data.data || []);
+    } catch (error) {
+      console.error("Xatolik savollarni olishda:", error);
+    }
+  };
+
+  fetchQuestions();
+}, [currentPage]);
 
     const handlePageChange = (e, value) => {
         navigate(`/main/savollar/${value}`);

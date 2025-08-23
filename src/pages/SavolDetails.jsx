@@ -21,6 +21,7 @@ import SavolComment from "../components/SavolComment";
 import axios from "axios";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { fetchWithAuth } from "../service/fetchWithAuth";
 
 const BASE_URL =
     import.meta.env.DEV
@@ -43,109 +44,102 @@ export default function SavolDetails() {
     const [currentQuestion, setCurrentQuestion] = useState(null);
 
 
-    useEffect(() => {
-        const fetchQuestions = async () => {
-            try {
-                const res = await axios.get(
-                    `${BASE_URL}/api/avto-test/questions/get-questions-for-admin?questionSetNumber=${page}`,
-                    {
-                        headers: { Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1NThmZGVhMS1iMGRhLTRjZjYtYmRmZS00MmMyYjg0ZjMzZjIiLCJyb2xlIjoiU1VQRVJfQURNSU4iLCJpYXQiOjE3NTU4NDc4MDIsImV4cCI6MTc1NjQ1MjYwMn0.RaAYC8-aaZFqKFjKI3q8Y9U1cdFdBgYWakL9JEeSw1w` },
-                    }
-                );
-                const questionList = res.data.data;
-                setQuestions(questionList);
+useEffect(() => {
+    const fetchQuestions = async () => {
+        try {
+            const res = await fetchWithAuth(
+                `${BASE_URL}/api/avto-test/questions/get-questions-for-admin?questionSetNumber=${page}`
+            );
 
-                const index = questionList.findIndex(q => String(q.id) === id);
-                if (index !== -1) {
-                    setCurrentIndex(index);
-                    setCurrentQuestion(questionList[index]);
-                }
-            } catch (error) {
-                console.error('Xatolik savollarni olishda:', error);
+            const data = await res.json();
+            console.log("🔍 Backend javobi savollar:", data);
+
+            const questionList = data.data || [];
+            setQuestions(questionList);
+
+            const index = questionList.findIndex(
+                q => String(q.id) === String(id)
+            );
+
+            if (index !== -1) {
+                setCurrentIndex(index);
+                setCurrentQuestion(questionList[index]);
+            }
+
+            console.log("🟢 Hozirgi savol:", questionList[index]);
+        } catch (error) {
+            console.error("Xatolik savollarni olishda:", error);
+        }
+    };
+
+    fetchQuestions();
+}, [page, id]);
+
+
+
+    useEffect(() => {
+        const fetchQuestion = async () => {
+            try {
+                const res = await fetchWithAuth(`${BASE_URL}/api/avto-test/questions/${id}`);
+                const data = await res.json();
+                console.log("🔍 Backend javobi:", data);
+                setQuestion(data);
+                setEditedUz(data.questionUz || "");
+                setEditedRu(data.questionRu || "");
+            } catch (err) {
+                console.error("Error fetching question:", err);
+            } finally {
+                setLoading(false);
             }
         };
 
-        fetchQuestions();
-    }, [page, id]);
-
- useEffect(() => {
-    fetch(`${BASE_URL}/api/avto-test/questions/${id}`, {
-        headers: {
-            "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1NThmZGVhMS1iMGRhLTRjZjYtYmRmZS00MmMyYjg0ZjMzZjIiLCJyb2xlIjoiU1VQRVJfQURNSU4iLCJpYXQiOjE3NTU4NDc4MDIsImV4cCI6MTc1NjQ1MjYwMn0.RaAYC8-aaZFqKFjKI3q8Y9U1cdFdBgYWakL9JEeSw1w",
-            "Content-Type": "application/json",
-        },
-    })
-        .then(async (res) => {
-            if (!res.ok) {
-                const errText = await res.text();
-                throw new Error(errText);
-            }
-            return res.json();
-        })
-        .then((data) => {
-            setQuestion(data);
-            setEditedUz(data.questionUz || "");
-            setEditedRu(data.questionRu || "");
-            setLoading(false);
-        })
-        .catch((err) => {
-            console.error("Error fetching question:", err);
-            setLoading(false);
-        });
-}, [id]);
+        fetchQuestion();
+    }, [id]);
 
 
 
 
-    const handleSave = () => {
+
+    const handleSave = async () => {
         setSaving(true);
 
-        fetch(`${BASE_URL}/api/avto-test/questions/${id}`, {
-            method: "PATCH",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1NThmZGVhMS1iMGRhLTRjZjYtYmRmZS00MmMyYjg0ZjMzZjIiLCJyb2xlIjoiU1VQRVJfQURNSU4iLCJpYXQiOjE3NTU4NDc4MDIsImV4cCI6MTc1NjQ1MjYwMn0.RaAYC8-aaZFqKFjKI3q8Y9U1cdFdBgYWakL9JEeSw1w`,
-            },
-            body: JSON.stringify({
-                ...question,
-                questionUz: editedUz,
-                questionRu: editedRu,
-                optionsUz: question.optionsUz,
-                optionsRu: question.optionsRu,
-            }),
-        })
+        try {
+            const updatedData = await fetchWithAuth(
+                `${BASE_URL}/api/avto-test/questions/${id}`,
+                {
+                    method: "PATCH",
+                    body: JSON.stringify({
+                        ...question,
+                        questionUz: editedUz,
+                        questionRu: editedRu,
+                        optionsUz: question.optionsUz,
+                        optionsRu: question.optionsRu,
+                    }),
+                }
+            );
 
-            .then((res) => {
-                if (!res.ok) throw new Error("Failed to update");
-                return res.json();
-            })
-            .then((updatedData) => {
-                setQuestion(prev => ({
-                    ...prev,
-                    ...updatedData,
-                }));
-            })
-            .catch((err) => {
-                console.error("Update error:", err);
-                alert("Xatolik yuz berdi!");
-            })
-            .finally(() => setSaving(false));
+            setQuestion((prev) => ({
+                ...prev,
+                ...updatedData,
+            }));
+        } catch (err) {
+            console.error("Update error:", err);
+            alert("Xatolik yuz berdi!");
+        } finally {
+            setSaving(false);
+        }
     };
+
     const handleImageUpload = (newImgUrl) => {
         console.log("🟢 Yangi rasm URL keldi:", newImgUrl);
 
-        fetch(`${BASE_URL}/api/avto-test/questions/${question.id}`, {
+        fetchWithAuth(`${BASE_URL}/api/avto-test/questions/${question.id}`, {
             method: "PATCH",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1NThmZGVhMS1iMGRhLTRjZjYtYmRmZS00MmMyYjg0ZjMzZjIiLCJyb2xlIjoiU1VQRVJfQURNSU4iLCJpYXQiOjE3NTU4NDc4MDIsImV4cCI6MTc1NjQ1MjYwMn0.RaAYC8-aaZFqKFjKI3q8Y9U1cdFdBgYWakL9JEeSw1w`,
-            },
             body: JSON.stringify({
                 ...question,
                 imgUrl: newImgUrl,
             }),
         })
-            .then((res) => res.json())
             .then((data) => {
                 console.log("✅ PATCH muvaffaqiyatli:", data);
                 setQuestion((prev) => ({
@@ -241,7 +235,7 @@ export default function SavolDetails() {
                     </Box>
                 </Toolbar>
             </AppBar>
-            <Box sx={{pl: 10, pr: 10}}>
+            <Box sx={{ pl: 10, pr: 10 }}>
                 <Box sx={{ display: 'flex', justifyContent: "space-between", mb: 3 }}>
                 </Box>
                 <SavolImage
@@ -254,7 +248,7 @@ export default function SavolDetails() {
                 <Grid container spacing={4} justifyContent={"space-between"} marginTop={'20px'}>
                     {/* O‘zbekcha */}
                     <Grid item xs={12} md={6} width={"48%"}>
-                        <Paper elevation={3} sx={{ p: 3, height: '100%', display: 'flex', flexDirection: 'column', gap: 2}}>
+                        <Paper elevation={3} sx={{ p: 3, height: '100%', display: 'flex', flexDirection: 'column', gap: 2 }}>
                             <Typography variant="subtitle1" color="text.secondary">
                                 O‘zbekcha:
                             </Typography>

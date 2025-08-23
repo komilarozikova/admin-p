@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Box, Button, IconButton, Typography } from '@mui/material';
 import EditIcon from "@mui/icons-material/Edit";
+import { fetchWithAuth } from '../service/fetchWithAuth';
 
 const BASE_URL =
     import.meta.env.DEV
@@ -28,11 +29,8 @@ const SavolImage = ({ imgUrl, questionId, comment, expert_commit, onImageUpload 
             const formData = new FormData();
             formData.append('uploads', file);
 
-            const response = await fetch(`${BASE_URL}/api/avto-test/uploads/uploads`, {
+            const response = await fetchWithAuth(`${BASE_URL}/api/avto-test/uploads/uploads`, {
                 method: 'POST',
-                headers: {
-                    Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1NThmZGVhMS1iMGRhLTRjZjYtYmRmZS00MmMyYjg0ZjMzZjIiLCJyb2xlIjoiU1VQRVJfQURNSU4iLCJpYXQiOjE3NTU4NDc4MDIsImV4cCI6MTc1NjQ1MjYwMn0.RaAYC8-aaZFqKFjKI3q8Y9U1cdFdBgYWakL9JEeSw1w`,
-                },
                 body: formData,
             });
             console.log(response);

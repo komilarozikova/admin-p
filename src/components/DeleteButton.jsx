@@ -2,6 +2,7 @@
 
 import { Button } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { fetchWithAuth } from "../service/fetchWithAuth";
 
 const BASE_URL =
     import.meta.env.DEV
@@ -23,11 +24,10 @@ const DeleteButton = ({ id, onDelete }) => {
     if (!confirmDelete) return;
 
     try {
-      const response = await fetch(`${BASE_URL}/api/avto-test/questions/${id}`, {
+      const response = await fetchWithAuth(`${BASE_URL}/api/avto-test/questions/${id}`, {
         method: "DELETE",
          headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1NThmZGVhMS1iMGRhLTRjZjYtYmRmZS00MmMyYjg0ZjMzZjIiLCJyb2xlIjoiU1VQRVJfQURNSU4iLCJpYXQiOjE3NTU4NDc4MDIsImV4cCI6MTc1NjQ1MjYwMn0.RaAYC8-aaZFqKFjKI3q8Y9U1cdFdBgYWakL9JEeSw1w`,
+                "Content-Type": "application/json"
             },
       });
 
@@ -47,12 +47,12 @@ const DeleteButton = ({ id, onDelete }) => {
   };
 
   return (
-    <Button
+    <div
       color="error"
       startIcon={<DeleteIcon />}
       onClick={handleDelete}
     >
-    </Button>
+    </div>
   );
 };
 

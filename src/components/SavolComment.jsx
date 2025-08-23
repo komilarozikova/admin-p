@@ -3,6 +3,7 @@ import { TextField, Button, Box, Typography } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
 import AddIcon from '@mui/icons-material/Add';
+import { fetchWithAuth } from "../service/fetchWithAuth";
 
 const BASE_URL =
     import.meta.env.DEV
@@ -47,11 +48,10 @@ export default function SavolComment({ question, onSave }) {
                 [fieldName]: value, 
             };
 
-            const response = await fetch(`${BASE_URL}/api/avto-test/questions/${question.id}`, {
+            const response = await fetchWithAuth(`${BASE_URL}/api/avto-test/questions/${question.id}`, {
                 method: "PATCH",
                 headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1NThmZGVhMS1iMGRhLTRjZjYtYmRmZS00MmMyYjg0ZjMzZjIiLCJyb2xlIjoiU1VQRVJfQURNSU4iLCJpYXQiOjE3NTU4NDc4MDIsImV4cCI6MTc1NjQ1MjYwMn0.RaAYC8-aaZFqKFjKI3q8Y9U1cdFdBgYWakL9JEeSw1w`, 
+                    "Content-Type": "application/json"
                 },
                 body: JSON.stringify(updatedData),
             });
@@ -98,11 +98,10 @@ export default function SavolComment({ question, onSave }) {
         localStorage.setItem(`comment-${question.id}`, JSON.stringify(updated));
 
         try {
-            await fetch(`${BASE_URL}/api/avto-test/questions/${question.id}`, {
+            await fetchWithAuth(`${BASE_URL}/api/avto-test/questions/${question.id}`, {
                 method: "PATCH",
                 headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1NThmZGVhMS1iMGRhLTRjZjYtYmRmZS00MmMyYjg0ZjMzZjIiLCJyb2xlIjoiU1VQRVJfQURNSU4iLCJpYXQiOjE3NTU4NDc4MDIsImV4cCI6MTc1NjQ1MjYwMn0.RaAYC8-aaZFqKFjKI3q8Y9U1cdFdBgYWakL9JEeSw1w`, 
+                    "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
                     ...question,
@@ -132,11 +131,10 @@ export default function SavolComment({ question, onSave }) {
         localStorage.setItem(`comment-${question.id}`, JSON.stringify(updated));
 
         try {
-            await fetch(`${BASE_URL}/api/avto-test/questions/${question.id}`, {
+            await fetchWithAuth(`${BASE_URL}/api/avto-test/questions/${question.id}`, {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1NThmZGVhMS1iMGRhLTRjZjYtYmRmZS00MmMyYjg0ZjMzZjIiLCJyb2xlIjoiU1VQRVJfQURNSU4iLCJpYXQiOjE3NTU4NDc4MDIsImV4cCI6MTc1NjQ1MjYwMn0.RaAYC8-aaZFqKFjKI3q8Y9U1cdFdBgYWakL9JEeSw1w`, 
                 },
                 body: JSON.stringify({
                     ...question,
@@ -166,11 +164,10 @@ export default function SavolComment({ question, onSave }) {
         localStorage.setItem(`comment-${question.id}`, JSON.stringify(updated));
 
         try {
-            await fetch(`${BASE_URL}/api/avto-test/questions/${question.id}`, {
+            await fetchWithAuth(`${BASE_URL}/api/avto-test/questions/${question.id}`, {
                 method: "PATCH",
                 headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1NThmZGVhMS1iMGRhLTRjZjYtYmRmZS00MmMyYjg0ZjMzZjIiLCJyb2xlIjoiU1VQRVJfQURNSU4iLCJpYXQiOjE3NTU4NDc4MDIsImV4cCI6MTc1NjQ1MjYwMn0.RaAYC8-aaZFqKFjKI3q8Y9U1cdFdBgYWakL9JEeSw1w`,
+                    "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
                     ...question,
@@ -201,11 +198,10 @@ export default function SavolComment({ question, onSave }) {
         localStorage.setItem(`comment-${question.id}`, JSON.stringify(updated));
 
         try {
-            await fetch(`${BASE_URL}/api/avto-test/questions/${question.id}`, {
+            await fetchWithAuth(`${BASE_URL}/api/avto-test/questions/${question.id}`, {
                 method: "PATCH",
                 headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1NThmZGVhMS1iMGRhLTRjZjYtYmRmZS00MmMyYjg0ZjMzZjIiLCJyb2xlIjoiU1VQRVJfQURNSU4iLCJpYXQiOjE3NTU4NDc4MDIsImV4cCI6MTc1NjQ1MjYwMn0.RaAYC8-aaZFqKFjKI3q8Y9U1cdFdBgYWakL9JEeSw1w`,
+                    "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
                     ...question,
